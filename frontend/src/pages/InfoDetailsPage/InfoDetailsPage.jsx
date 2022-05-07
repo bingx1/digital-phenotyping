@@ -14,6 +14,7 @@ import ChatRoundedIcon from '@mui/icons-material/ChatRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRounded';
 import { Log } from '../../components/Logger';
+<<<<<<< Updated upstream:frontend/src/pages/InfoDetailsPage/InfoDetailsPage.jsx
 const dummyChartData = {
   options: {
     title: {
@@ -60,6 +61,17 @@ const dummyChartData = {
     },
   ],
 };
+=======
+import AppUsageChart from '../../components/InfoDetailsChart/AppUsageChart';
+import { Divider } from '@mui/material';
+import SmsUsageChart from '../../components/InfoDetailsChart/SmsUsageChart';
+import CategoryChart from '../../components/InfoDetailsChart/CategoryChart';
+import CallsUsageChart from '../../components/InfoDetailsChart/CallsUsageChart';
+import UnlockDurationChart from '../../components/InfoDetailsChart/UnlockDurationChart';
+import LocationNumberChart from '../../components/InfoDetailsChart/locationNumberChart';
+import LocationNumberChartHeatmap from '../../components/InfoDetailsChart/locationNumberChartHeatmap';
+import LocationNumberChartTreemap from '../../components/InfoDetailsChart/locationNumberChartTreemapChart';
+>>>>>>> Stashed changes:frontend/src/pages/InfoDetailsPage/InfoDetailsPage.tsx
 
 function InfoDetailsPage() {
   const [patientId, setPatientId] = useState('123');
@@ -75,6 +87,81 @@ function InfoDetailsPage() {
     Log(name);
     setCurSelected(name);
   };
+<<<<<<< Updated upstream:frontend/src/pages/InfoDetailsPage/InfoDetailsPage.jsx
+=======
+
+  // chart to show when clicking application button
+  const appChart = (
+    <ChartContainer>
+      <CardContainer>
+        <AppUsageChart />
+      </CardContainer>
+      <CardContainer>
+        <CategoryChart />
+      </CardContainer>
+    </ChartContainer>
+  );
+
+  // chart to show when clicking communication button
+  const comChart = (
+    <ChartContainer>
+      <CardContainer>
+        <SmsUsageChart />
+      </CardContainer>
+      <CardContainer>
+        <CallsUsageChart />
+      </CardContainer>
+    </ChartContainer>
+  );
+
+  // chart to show when clicking locations button
+  const locChart = (
+    <ChartContainer>
+      <CardContainer>
+        <LocationNumberChart />
+      </CardContainer>
+      <CardContainer>
+        <LocationNumberChartHeatmap />
+      </CardContainer>
+      <CardContainer>
+        <LocationNumberChartTreemap />
+      </CardContainer>
+    </ChartContainer>
+
+  );
+
+  // chart to show when clicking screen button
+  const screenChart = (
+    <ChartContainer>
+      <CardContainer>
+        <UnlockDurationChart />
+      </CardContainer>
+    </ChartContainer>
+  );
+
+  const defaultGreeting = (
+    <CardContainer>
+      <Reminder>Select any type of aware information to see detail chart</Reminder>
+    </CardContainer>
+  );
+
+  // define the acutal chart that need to show
+  let show = (type: string) => {
+    switch (type) {
+      case 'Applications':
+        return appChart;
+      case 'Communication':
+        return comChart;
+      case 'Locations':
+        return locChart;
+      case 'Screen':
+        return screenChart;
+      default:
+        return defaultGreeting;
+    }
+  };
+  const chartToShow = show(curSelected);
+>>>>>>> Stashed changes:frontend/src/pages/InfoDetailsPage/InfoDetailsPage.tsx
   const navBack = () => {};
   return (
     <MainContainer>
