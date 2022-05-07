@@ -19,6 +19,7 @@ import SmsUsageChart from '../../components/InfoDetailsChart/SmsUsageChart';
 import CategoryChart from '../../components/InfoDetailsChart/CategoryChart';
 import CallsUsageChart from '../../components/InfoDetailsChart/CallsUsageChart';
 import UnlockDurationChart from '../../components/InfoDetailsChart/UnlockDurationChart';
+import TypesLocationsvisitedChart from '../../components/InfoDetailsChart/TypesLocationsvisitedChart';
 
 function InfoDetailsPage() {
   const [patientId, setPatientId] = useState('123');
@@ -54,9 +55,11 @@ function InfoDetailsPage() {
 
   // chart to show when clicking locations button
   const locChart = (
-    <CardContainer>
-      <Reminder>Location chart on development</Reminder>
-    </CardContainer>
+    <ChartContainer>
+      <CardContainer>
+         <TypesLocationsvisitedChart />
+      </CardContainer>
+    </ChartContainer>
   );
 
   // chart to show when clicking screen button
