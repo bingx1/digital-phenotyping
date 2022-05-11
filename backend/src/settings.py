@@ -59,7 +59,6 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True  # default False
 
 CORS_ALLOW_CREDENTIALS = True  # allow cookie
-ALLOWED_HOSTS = ['127.0.0.1']
 
 CORS_ALLOW_HEADERS = (
     'x-requested-with',
@@ -152,3 +151,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GOOGLE_MAPS_API_KEY = 'AIzaSyCF-I4LgabjEwFFjMqHSuMNdX1_MTa6P6A'
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
