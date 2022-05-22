@@ -102,10 +102,10 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+	'USER': os.environ.get('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        'HOST': os.environ.get('DATABASE_HOST'),
         'NAME': 'swen90013',
-        'USER': 'bing',
-        'PASSWORD': 'N8ZHRiVDGQNk6Su',
-        'HOST': 'swen90013.mysql.database.azure.com',
         'PORT': '3306',
     }
 }
