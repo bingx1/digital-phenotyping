@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'dataServer',
     'sms',
     'rest_framework',
-    'locationServer'
+    'locationServer',
+    'screenServer'
 ]
 
 MIDDLEWARE = [
