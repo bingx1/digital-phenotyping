@@ -36,3 +36,7 @@ First `cd` into the `django-site` directory, and then attempt to start the djang
 cd django-site
 python manage.py runserver
 ```
+
+## Deployment
+- Heroku
+- Azure
