@@ -105,7 +105,7 @@ DATABASES = {
         'NAME': 'swen90013',
         'USER': 'root',
         'PASSWORD': '@WSX1qaz',
-        'HOST': 47.95.10.24,
+        'HOST': '47.95.10.24',
         'PORT': '3306',
     }
 }
