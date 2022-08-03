@@ -90,14 +90,7 @@ export default function Loginpage() {
       <img src={logo} width={152} height={63} alt='senpsi logo' />
       </Box>
 
-      <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '15ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >          
+      <Box component="form" sx={{'& .MuiTextField-root': { m: 1, width: '20ch' },}} noValidate autoComplete="off">          
       <div>
         <TextField
           id="filled-required"
@@ -109,7 +102,7 @@ export default function Loginpage() {
           }}
         />
         <br></br>
-        <FormControl sx={{ m: 1 }} variant="outlined" style={{background: "#d6d6fc"}}>
+        <FormControl sx={{ m: 1,width: '20ch'  }} variant="outlined" style={{background: "#d6d6fc"} }>
           <InputLabel htmlFor="outlined-adornment-password"><KeyIcon /> Password:</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
