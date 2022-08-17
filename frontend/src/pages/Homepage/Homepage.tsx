@@ -12,54 +12,80 @@ import InfoSumCard from '../../components/common/InfoSumCard';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import COLORS from '../../constant/Colors';
-
 const muiCache = createCache({
   key: 'mui-datatables',
   prepend: true,
 });
-const columns = [
-  'Name',
-  'Title',
-  'Age',
-  'Status',
-  'Last update',
-  {
-    name: 'Action',
-    options: {
-      filter: false,
-      sort: false,
-      empty: true,
-      customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
-        return (
-          <ViewBtn
-            onClick={() =>
-              window.alert(`Clicked "Edit" for row ${rowIndex} with dataIndex of ${dataIndex}`)
-            }
-          >
-            View
-          </ViewBtn>
-        );
-      },
-    },
-  },
-];
-const dummyData = [['Gabby George', 'Dr', 23, 'Normal', '2022-03-13']];
+
+const dummyData = [['Gabby George', 'Dr', 23, 'Normal', '2022-03-22', '2123']];
 export default function Homepage() {
   let navigate = useNavigate();
   const [clientData, setClientData] = useState(dummyData);
+
   let token = sessionStorage.getItem('userInfo');
+
   useEffect(() => {
     if (!token) {
       navigate('/');
     }
   }, []);
-  const logout = () => {
-    sessionStorage.removeItem('userInfo');
-    navigate('/homepage');
+
+  const columns = [
+    {
+      name: 'Name',
+      options: {
+        customHeadLabelRender: () => <TableHeader>Name</TableHeader>,
+      },
+    },
+    {
+      name: 'Title',
+      options: {
+        customHeadLabelRender: () => <TableHeader>Title</TableHeader>,
+      },
+    },
+    {
+      name: 'Age',
+      options: {
+        customHeadLabelRender: () => <TableHeader>Name</TableHeader>,
+      },
+    },
+    {
+      name: 'Status',
+      options: {
+        customHeadLabelRender: () => <TableHeader>Status</TableHeader>,
+      },
+    },
+    {
+      name: 'Last update',
+      options: {
+        customHeadLabelRender: () => <TableHeader>Last update</TableHeader>,
+      },
+    },
+    {
+      name: 'Action',
+      options: {
+        filter: false,
+        sort: false,
+        empty: true,
+        customHeadLabelRender: () => <TableHeader>Action</TableHeader>,
+        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+          return (
+            <ViewBtn
+              onClick={() => navigate('/infodetailspage', { state: { id: clientData[dataIndex] } })}
+            >
+              View
+            </ViewBtn>
+          );
+        },
+      },
+    },
+  ];
+  const addClient = () => {
+    navigate('/addclientpage');
   };
   const HeaderElements = () => {
     return (
-      <Button variant='contained' color='error'>
+      <Button onClick={addClient} variant='contained' color='error'>
         Add Client
       </Button>
     );
@@ -91,16 +117,6 @@ export default function Homepage() {
           />
         </TableContainer>
       </CacheProvider>
-      <div>
-        <Link to='/loginpage'>
-          <Button onClick={logout} variant='contained'>
-            Log Out
-          </Button>
-        </Link>
-      </div>
-      <Link to='/infodetailspage'>
-        <Button variant='contained'>Client Info Details</Button>
-      </Link>
     </MainContainer>
   );
 }
@@ -112,6 +128,9 @@ const MainContainer = styled.div`
   align-items: center;
   flex-direction: column;
   height: 100vh;
+`;
+const TableHeader = styled.div`
+  font-weight: bolder;
 `;
 const Header = styled.div`
   width: 80vw;

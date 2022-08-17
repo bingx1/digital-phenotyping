@@ -42,60 +42,6 @@ function InfoDetailsPage() {
     setCurSelected(name);
   };
 
-  // chart to show when clicking application button
-  const appChart = (
-    <ChartContainer>
-      <CardContainer>
-        <AppUsageChart />
-      </CardContainer>
-      <CardContainer>
-        <CategoryChart />
-      </CardContainer>
-    </ChartContainer>
-  );
-
-  // chart to show when clicking communication button
-  const comChart = (
-    <ChartContainer>
-      <CardContainer>
-        <SmsUsageChart />
-      </CardContainer>
-      <CardContainer>
-        <CallsUsageChart />
-      </CardContainer>
-    </ChartContainer>
-  );
-
-  // chart to show when clicking locations button
-  const locChart = (
-    <ChartContainer>
-      <CardContainer>
-        <LocationNumberHeatMapChart />
-      </CardContainer>
-      <CardContainer>
-        <LocationNumberColumnChart />
-      </CardContainer>
-    </ChartContainer>
-  );
-
-  // chart to show when clicking screen button
-  const screenChart = (
-    <ChartContainer>
-      <CardContainer>
-        <UnlockDurationChart />
-      </CardContainer>
-      <CardContainer>
-        <UnlockTimesChart />
-      </CardContainer>
-    </ChartContainer>
-  );
-
-  const tagCloud = (
-    <CardContainer>
-      <KeywordCloud />
-    </CardContainer>
-  );
-
   const defaultGreeting = (
     <CardContainer>
       <Reminder>Client Name: Simon</Reminder>
@@ -103,83 +49,18 @@ function InfoDetailsPage() {
     </CardContainer>
   );
 
-  // define the acutal chart that need to show
-  let show = (type: string) => {
-    switch (type) {
-      case 'Applications':
-        return appChart;
-      case 'Communication':
-        return comChart;
-      case 'Locations':
-        return locChart;
-      case 'Screen':
-        return screenChart;
-      case 'Twitter':
-        return tagCloud;
-      default:
-        return defaultGreeting;
-    }
-  };
-  const chartToShow = show(curSelected);
   const navBack = () => {};
 
   return (
     <MainContainer>
       <Header onClick={navBack}>
         <Link to='/homepage'>
-          <NavTitle title='Client Details' showArrowBack={true} />
+          <NavTitle title='Add a Client' showArrowBack={true} />
         </Link>
         <SearchBar />
         <Spacer />
         <NameAvatar />
       </Header>
-      <SubContainer>
-        {/* AWARE Icon on the right */}
-        <AwareAppsContainer>
-          <SectionTitle title={'AWARE Information'} />
-          <Grid
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            container
-            rowSpacing={3}
-            direction='row'
-            justifyContent='flex-start'
-            alignItems='baseline'
-          >
-            <Grid onClick={() => selected('Applications')} item xs={2}>
-              <IconText curSelected={curSelected} name='Applications'>
-                <PhonelinkIcon sx={{ fontSize: 80 }} />
-                <AppName>Applications</AppName>
-              </IconText>
-            </Grid>
-            <Grid item onClick={() => selected('Communication')} xs={2}>
-              <IconText curSelected={curSelected} name='Communication'>
-                <ChatRoundedIcon sx={{ fontSize: 80 }} />
-                <AppName>Communication</AppName>
-              </IconText>
-            </Grid>
-            <Grid item onClick={() => selected('Locations')} xs={2}>
-              <IconText curSelected={curSelected} name='Locations'>
-                <LocationOnRoundedIcon sx={{ fontSize: 80 }} />
-                <AppName>Locations</AppName>
-              </IconText>
-            </Grid>
-            <Grid item onClick={() => selected('Screen')} xs={2}>
-              <IconText curSelected={curSelected} name='Screen'>
-                <AccessTimeFilledRoundedIcon sx={{ fontSize: 80 }} />
-                <AppName>Screen</AppName>
-              </IconText>
-            </Grid>
-            <Grid item onClick={() => selected('Twitter')} xs={2}>
-              <IconText curSelected={curSelected} name='Twitter'>
-                <TwitterIcon sx={{ fontSize: 80 }} />
-                <AppName>Twitter</AppName>
-              </IconText>
-            </Grid>
-          </Grid>
-        </AwareAppsContainer>
-
-        {chartToShow}
-      </SubContainer>
     </MainContainer>
   );
 }
