@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/cache": "^11.10.1",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.1",
@@ -54,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@types/mui-datatables": "^3.7.9",
     "@types/react-tagcloud": "^1.1.7",
     "@types/styled-components": "^5.1.25"
   }
