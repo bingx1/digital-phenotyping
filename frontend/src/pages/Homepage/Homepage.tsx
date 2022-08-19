@@ -12,6 +12,8 @@ import InfoSumCard from '../../components/common/InfoSumCard';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
 import COLORS from '../../constant/Colors';
+import axios from 'axios';
+import { Log } from '../../components/common/Logger';
 const muiCache = createCache({
   key: 'mui-datatables',
   prepend: true,
@@ -22,13 +24,32 @@ export default function Homepage() {
   let navigate = useNavigate();
   const [clientData, setClientData] = useState(dummyData);
 
-  let token = sessionStorage.getItem('userInfo');
+  let userInfo = sessionStorage.getItem('userInfo')
 
   useEffect(() => {
-    if (!token) {
+    if (!userInfo) {
       navigate('/');
     }
+    fetchClientList()
   }, []);
+
+  const fetchClientList = () =>{
+    let  clinicianId = 1
+    if(userInfo !== null){
+      clinicianId = JSON.parse(userInfo).clinician_info.id
+    }
+    axios
+      .post('https://digital-phenotyping.herokuapp.com/userServer/ClientInfoList/', {
+        id: clinicianId,
+      })
+      .then((response) => {
+        Log('Fetched SMS data..', response.data);
+         
+      })
+      .catch((err) => {
+        Log(err);
+      });
+  }
 
   const columns = [
     {
