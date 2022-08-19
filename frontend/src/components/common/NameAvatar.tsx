@@ -58,7 +58,6 @@ function NameAvatar() {
 const Container = styled.div`
   display: flex;
   width: 300px;
-  margin-left: 100px;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
@@ -72,6 +71,9 @@ const Name = styled.div`
   font-weight: 700;
   font-family: 'Open Sans', sans-serif;
   color: ${COLORS.text};
+  @media screen and (max-width: 1300px){
+    font-size: 23px;
+  }
 `;
 const Avatar = styled.div`
   height: 60px;

@@ -11,12 +11,15 @@ import { Log } from '../../components/common/Logger';
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { LoadingButton } from '@mui/lab';
 
 export default function Loginpage() {
+  const [errorMsg, setErrorMsg] = useState('')
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');
   const [showPwd, setShowPwd] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [showLoginLoading, setShowLoginLoading] = useState(false)
   let navigate = useNavigate();
 
   const toggleShowPwd = () => {
@@ -39,10 +42,22 @@ export default function Loginpage() {
   const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
   });
+
+  const handleSubmit = (evt: any) =>{
+    if(evt.key === "Enter"){
+      login()
+    }
+  }
+
   function login() {
     Log(account);
     Log(password);
-
+    if(account === '' || password === ''){
+      setErrorMsg("Please fill out all fields")
+      setShowSnackbar(true)
+      return
+    }
+    setShowLoginLoading(true)
     axios
       .post('https://digital-phenotyping.herokuapp.com/login/', {
         username: account,
@@ -51,12 +66,15 @@ export default function Loginpage() {
       .then((response) => {
         Log('Fetched SMS data..', response.data);
         if (response.data.access !== undefined) {
+          setShowLoginLoading(false)
           sessionStorage.setItem('userInfo', JSON.stringify(response.data));
           navigate('/homepage');
         }
       })
       .catch((err) => {
         Log(err);
+        setShowLoginLoading(false)
+        setErrorMsg('Wrong password or email')
         setShowSnackbar(true);
       });
   }
@@ -77,6 +95,7 @@ export default function Loginpage() {
           <Wrapper>
             <Title>Password</Title>
             <TextInput
+              onKeyDown={handleSubmit}
               onChange={changePassword}
               value={password}
               type={showPwd ? '' : 'password'}
@@ -88,7 +107,15 @@ export default function Loginpage() {
             <VisibilityOffBtn onClick={toggleShowPwd} />
           )}
         </TextInputContainer>
-        <LoginButton onClick={login}>Login</LoginButton>
+        <LoginButtonContainer>
+          
+          <LoginBtn  
+            color="info"
+            loading={showLoginLoading}
+            variant="contained" 
+            onClick={login}>Login</LoginBtn>
+        </LoginButtonContainer>
+       
       </Container>
 
       <Snackbar
@@ -97,7 +124,7 @@ export default function Loginpage() {
         onClose={handleClose}
         autoHideDuration={3000}
       >
-        <Alert severity='error'>Wrong password or email</Alert>
+        <Alert severity='error'>{errorMsg}</Alert>
       </Snackbar>
     </MainContainer>
   );
@@ -165,20 +192,15 @@ const TextInput = styled.input`
     border-bottom: 1px solid ${COLORS.primary};
   }
 `;
-const LoginButton = styled.div`
-  text-align: center;
-  width: 100px;
-  padding: 5px;
-  font-weight: bold;
-  font-size: 23px;
-  border-radius: 15px;
+const LoginButtonContainer = styled.div`
   margin: 20px auto;
-  color: ${COLORS.white};
-  background-color: ${COLORS.login_btn};
-  &:hover {
-    cursor: pointer;
-  }
+  width: 100px;
+  
 `;
+const LoginBtn = styled(LoadingButton)`
+  color: ${COLORS.white};
+  background-color: '${COLORS.login_btn}';
+`
 const VisibilityBtn = styled(Visibility)`
   &:hover {
     cursor: pointer;

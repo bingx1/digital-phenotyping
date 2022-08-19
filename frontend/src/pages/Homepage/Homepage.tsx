@@ -71,6 +71,7 @@ export default function Homepage() {
         customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
           return (
             <ViewBtn
+              variant="contained"
               onClick={() => navigate('/infodetailspage', { state: { id: clientData[dataIndex] } })}
             >
               View
@@ -85,7 +86,7 @@ export default function Homepage() {
   };
   const HeaderElements = () => {
     return (
-      <Button onClick={addClient} variant='contained' color='error'>
+      <Button  onClick={addClient} variant='contained' color='info'>
         Add Client
       </Button>
     );
@@ -94,6 +95,7 @@ export default function Homepage() {
     <MainContainer>
       <Header>
         <Logo src={logo} alt='logo' />
+        <Spacer />
         <NavTitle title='Client Management' showArrowBack={false} />
         <SearchBar />
         <Spacer />
@@ -134,9 +136,11 @@ const TableHeader = styled.div`
 `;
 const Header = styled.div`
   width: 80vw;
+  
   height: 100px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 `;
 const Logo = styled.img`
@@ -144,7 +148,7 @@ const Logo = styled.img`
 `;
 const Spacer = styled.div`
   height: 20px;
-  width: 30%;
+  width: 18px;
 `;
 const SubInfoContainer = styled.div`
   display: flex;

@@ -7,28 +7,50 @@ import SearchBar from '../../components/common/SearchBar';
 import NameAvatar from '../../components/common/NameAvatar';
 import COLORS from '../../constant/Colors';
 import CardContainer from '../../components/common/CardContainer';
-import SectionTitle from '../../components/common/SectionTitle';
-import PhonelinkIcon from '@mui/icons-material/Phonelink';
-import ChatRoundedIcon from '@mui/icons-material/ChatRounded';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
-import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRounded';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import { Log } from '../../components/common/Logger';
-import AppUsageChart from '../../components/InfoDetailsChart/AppUsageChart';
-import SmsUsageChart from '../../components/InfoDetailsChart/SmsUsageChart';
-import CategoryChart from '../../components/InfoDetailsChart/CategoryChart';
-import CallsUsageChart from '../../components/InfoDetailsChart/CallsUsageChart';
-import UnlockDurationChart from '../../components/InfoDetailsChart/UnlockDurationChart';
-import LocationNumberHeatMapChart from '../../components/InfoDetailsChart/locationNumberChartHeatmap';
-import LocationNumberColumnChart from '../../components/InfoDetailsChart/locationNumberColumnChart';
-import UnlockTimesChart from '../../components/InfoDetailsChart/UnlockTimesChart';
-import KeywordCloud from '../../components/InfoDetailsChart/KeywordCloud';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 function InfoDetailsPage() {
   let navigate = useNavigate();
   let location = useLocation();
-  const [patientId, setPatientId] = useState('123');
-  const [curSelected, setCurSelected] = useState('Application');
+  const [dateOfBirthErr, setDateOfBirthErr] = useState(false)
+  const [clientTitle, setClientTitle] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
+  const [textNotes, setTextNotes] = useState('');
+  const [twitterId, setTwitterId] = useState('');
+  const [facebookId, setFacebookId] = useState('');
+  const [awareId, setAwareId] = useState('');
+
+  const handleClientTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setClientTitle(event.target.value);
+  };
+  const handleFirstName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(event.target.value);
+  };
+  const handleLastName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(event.target.value);
+  };
+  // const handleDateOfBirth = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setDateOfBirth(event.target.value);
+  // };
+  const handleTextNotes = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTextNotes(event.target.value);
+  };
+  const handleTwitterId = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTwitterId(event.target.value);
+  };
+  const handleFacebookId = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFacebookId(event.target.value);
+  };
+  const handleAwareId = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAwareId(event.target.value);
+  };
+
   let token = sessionStorage.getItem('userInfo');
   useEffect(() => {
     console.log(location.state);
@@ -37,17 +59,10 @@ function InfoDetailsPage() {
       navigate('/');
     }
   }, []);
-  const selected = (name: string) => {
-    Log(name);
-    setCurSelected(name);
-  };
 
-  const defaultGreeting = (
-    <CardContainer>
-      <Reminder>Client Name: Simon</Reminder>
-      <Reminder>Select an AWARE category to see more details.</Reminder>
-    </CardContainer>
-  );
+  const addClient = () =>{
+    
+  }
 
   const navBack = () => {};
 
@@ -61,6 +76,32 @@ function InfoDetailsPage() {
         <Spacer />
         <NameAvatar />
       </Header>
+      <CardContainer>
+        <TextField value={clientTitle} onChange={handleFirstName} margin="dense"  placeholder='Dr' label="Client Title" variant="standard" />
+        <TextField value={firstName} onChange={handleFirstName} placeholder='Simon'  margin="dense" label="First Name" variant="standard" />
+        <TextField value={lastName} onChange={handleLastName} placeholder="D'Alfonso"  margin="dense" label="Last Name" variant="standard" />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+          label="Date of Birth" 
+          value={dateOfBirth}
+          onChange={(newValue: Date| null) => {
+            setDateOfBirth(newValue);
+          }}
+          inputFormat="yyyy-mm-dd"
+          renderInput={(params:any) => <TextField margin="dense" variant="standard" {...params} />}
+          />
+        </LocalizationProvider>
+        {/* <TextField value={dateOfBirth} onChange={handleDateOfBirth} error={dateOfBirthErr}  placeholder='1981-02-30'  margin="dense" label="Date of Birth" variant="standard" /> */}
+        <TextField value={textNotes} onChange={handleTextNotes} margin="dense" label="Text Notes" variant="standard" />
+        <TextField value={twitterId} onChange={handleTwitterId} placeholder='@sjdalf'  margin="dense" label="Twitter ID" variant="standard" />
+        <TextField value={facebookId} onChange={handleFacebookId} placeholder='simon.dalfonso'  margin="dense" label="Facebook ID" variant="standard" />
+        <TextField value={awareId} onChange={handleAwareId} placeholder='cf62dfa9-e22d-426f-b5a6-e4f2d72fc66a'  margin="dense" label="AWARE device ID" variant="standard" />
+        <BtnContainer>
+        <Button fullWidth onClick={addClient} variant='contained' color='info'>
+          Save
+        </Button>
+        </BtnContainer>
+      </CardContainer>
     </MainContainer>
   );
 }
@@ -75,41 +116,6 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const SubContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const AwareAppsContainer = styled.div`
-  display: flex;
-  margin-left: 100px;
-  margin-bottom: 50px;
-  width: 100%;
-  flex-direction: column;
-`;
-const ChartContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-const IconText = styled.div<Props>`
-  padding: 10px;
-  &:hover {
-    cursor: pointer;
-  }
-  color: ${(props: Props) => (props.name === props.curSelected ? COLORS.white : COLORS.text)};
-  background-color: ${(props: Props) =>
-    props.name === props.curSelected ? COLORS.primary : COLORS.white};
-  border-radius: 10px;
-  display: flex;
-  width: 180px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const AppName = styled.div`
-  margin: 10px;
-  font-size: 20px;
-  font-family: 'Open Sans', sans-serif;
-`;
 const Header = styled.div`
   width: 80vw;
   height: 100px;
@@ -120,12 +126,10 @@ const Header = styled.div`
 const Spacer = styled.div`
   height: 20px;
   width: 30%;
-`;
-const Reminder = styled.div`
-  margin: 10px;
-  font-size: 20px;
-  font-family: 'Open Sans', sans-serif;
-  align-self: center;
-`;
+`; 
+const BtnContainer = styled.div`
+  width: 120px;
+  margin: 20px auto;
+`
 
 export default InfoDetailsPage;
