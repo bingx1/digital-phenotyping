@@ -27,7 +27,7 @@ function NameAvatar() {
       userInfo = JSON.parse(userInfo);
     }
     //@ts-ignore
-    let name = userInfo!.clinician_info.first_name + ' ' + userInfo!.clinician_info.last_name;
+    let name = userInfo!.user_info.first_name + ' ' + userInfo!.user_info.last_name;
     setName(name);
   });
   return (

@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Grid from '@mui/material/Grid';
 import NavTitle from '../../components/common/NavTitle';
 import SearchBar from '../../components/common/SearchBar';
 import NameAvatar from '../../components/common/NameAvatar';
-import COLORS from '../../constant/Colors';
-import CardContainer from '../../components/common/CardContainer';
+import COLORS from '../../constant/Colors'; 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import axios from 'axios'; 
+import { Log } from '../../components/common/Logger';
+import { Snackbar, Alert } from '@mui/material';
 
 function InfoDetailsPage() {
   let navigate = useNavigate();
   let location = useLocation();
-  const [dateOfBirthErr, setDateOfBirthErr] = useState(false)
   const [clientTitle, setClientTitle] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -25,6 +25,9 @@ function InfoDetailsPage() {
   const [twitterId, setTwitterId] = useState('');
   const [facebookId, setFacebookId] = useState('');
   const [awareId, setAwareId] = useState('');
+  const [showSuccessBar, setShowSuccessBar] = useState(false)
+  const [showErrorBar, setShowErrorBar] = useState(false)
+
 
   const handleClientTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setClientTitle(event.target.value);
@@ -35,9 +38,6 @@ function InfoDetailsPage() {
   const handleLastName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLastName(event.target.value);
   };
-  // const handleDateOfBirth = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setDateOfBirth(event.target.value);
-  // };
   const handleTextNotes = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextNotes(event.target.value);
   };
@@ -51,17 +51,69 @@ function InfoDetailsPage() {
     setAwareId(event.target.value);
   };
 
-  let token = sessionStorage.getItem('userInfo');
+  // @ts-ignore
+  let clinicianInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+
   useEffect(() => {
     console.log(location.state);
 
-    if (!token) {
+    if (!clinicianInfo) {
       navigate('/');
     }
   }, []);
 
+  const closeSuccessBar = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setShowSuccessBar(false);
+  };
+
+  const closeErrorBar = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setShowErrorBar(false);
+  };
+
   const addClient = () =>{
-    
+    console.log(clientTitle)
+    console.log(firstName)
+    console.log(lastName)
+    console.log(dateOfBirth!.toISOString().substring(0,10))
+    console.log(textNotes)
+    console.log(twitterId)
+    console.log(facebookId)
+    axios
+      .post('https://digital-phenotyping.herokuapp.com/userServer/AddClient', {
+        clinicianId: clinicianInfo.user_info.id,
+        clientTitle: clientTitle,
+        firstName: firstName,
+        lastName: lastName,
+        dateOfBirth: dateOfBirth!.toISOString().substring(0,10),
+        textNotes: textNotes,
+        twitterId: twitterId,
+        facebookId: facebookId,
+        awareDeviceId: awareId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${clinicianInfo.access}`,
+        },
+      })
+      .then((response) => {
+        Log('Fetched Clients data..', response.data);
+        if(response.data === 200){
+          setShowSuccessBar(true)
+        }else{
+          setShowErrorBar(true)
+        }
+        
+      })
+      .catch((err) => {
+        Log(err);
+        setShowErrorBar(true)
+      });
   }
 
   const navBack = () => {};
@@ -77,7 +129,7 @@ function InfoDetailsPage() {
         <NameAvatar />
       </Header>
       <CardContainer>
-        <TextField value={clientTitle} onChange={handleFirstName} margin="dense"  placeholder='Dr' label="Client Title" variant="standard" />
+        <TextField value={clientTitle} onChange={handleClientTitle} margin="dense"  placeholder='Dr' label="Client Title" variant="standard" />
         <TextField value={firstName} onChange={handleFirstName} placeholder='Simon'  margin="dense" label="First Name" variant="standard" />
         <TextField value={lastName} onChange={handleLastName} placeholder="D'Alfonso"  margin="dense" label="Last Name" variant="standard" />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -98,23 +150,45 @@ function InfoDetailsPage() {
         <TextField value={awareId} onChange={handleAwareId} placeholder='cf62dfa9-e22d-426f-b5a6-e4f2d72fc66a'  margin="dense" label="AWARE device ID" variant="standard" />
         <BtnContainer>
         <Button fullWidth onClick={addClient} variant='contained' color='info'>
-          Save
+          Add
         </Button>
         </BtnContainer>
       </CardContainer>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={showSuccessBar}
+        onClose={closeSuccessBar}
+        autoHideDuration={3000}
+      >
+        <Alert severity='success'>A client has been successfully added!</Alert>
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={showErrorBar}
+        onClose={closeErrorBar}
+        autoHideDuration={3000}
+      >
+        <Alert severity='error'>Failed to add a client.</Alert>
+      </Snackbar>
     </MainContainer>
   );
 }
-
-interface Props {
-  curSelected: string;
-  name: string;
-}
+ 
 const MainContainer = styled.div`
   font-size: 32px;
   padding-left: 5vw;
   display: flex;
   flex-direction: column;
+`;
+const CardContainer = styled.div`
+  background-color: ${COLORS.white};
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 2px 15px 1px ${COLORS.shadow};
+  width: 500px;
+  padding: 30px;
+  margin: 20px;
 `;
 const Header = styled.div`
   width: 80vw;

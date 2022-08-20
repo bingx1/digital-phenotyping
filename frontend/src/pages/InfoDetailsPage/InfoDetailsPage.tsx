@@ -28,11 +28,13 @@ function InfoDetailsPage() {
   let navigate = useNavigate();
   let location = useLocation();
   const [patientId, setPatientId] = useState('123');
+  const [clientName, setClientName] = useState('')
   const [curSelected, setCurSelected] = useState('Application');
   let token = sessionStorage.getItem('userInfo');
+  let stateFromPrePage: {clientInfo: string[]} = location.state as {clientInfo: string[]}
   useEffect(() => {
-    console.log(location.state);
-
+    
+    setClientName(stateFromPrePage.clientInfo[0])
     if (!token) {
       navigate('/');
     }
@@ -46,10 +48,10 @@ function InfoDetailsPage() {
   const appChart = (
     <ChartContainer>
       <CardContainer>
-        <AppUsageChart />
+        <AppUsageChart uid={stateFromPrePage.clientInfo[5]} />
       </CardContainer>
       <CardContainer>
-        <CategoryChart />
+        <CategoryChart uid={stateFromPrePage.clientInfo[5]}/>
       </CardContainer>
     </ChartContainer>
   );
@@ -58,10 +60,10 @@ function InfoDetailsPage() {
   const comChart = (
     <ChartContainer>
       <CardContainer>
-        <SmsUsageChart />
+        <SmsUsageChart uid={stateFromPrePage.clientInfo[5]} />
       </CardContainer>
       <CardContainer>
-        <CallsUsageChart />
+        <CallsUsageChart uid={stateFromPrePage.clientInfo[5]} />
       </CardContainer>
     </ChartContainer>
   );
@@ -70,10 +72,10 @@ function InfoDetailsPage() {
   const locChart = (
     <ChartContainer>
       <CardContainer>
-        <LocationNumberHeatMapChart />
+        <LocationNumberHeatMapChart uid={stateFromPrePage.clientInfo[5]} />
       </CardContainer>
       <CardContainer>
-        <LocationNumberColumnChart />
+        <LocationNumberColumnChart uid={stateFromPrePage.clientInfo[5]} />
       </CardContainer>
     </ChartContainer>
   );
@@ -82,23 +84,23 @@ function InfoDetailsPage() {
   const screenChart = (
     <ChartContainer>
       <CardContainer>
-        <UnlockDurationChart />
+        <UnlockDurationChart uid={stateFromPrePage.clientInfo[5]} />
       </CardContainer>
       <CardContainer>
-        <UnlockTimesChart />
+        <UnlockTimesChart uid={stateFromPrePage.clientInfo[5]} />
       </CardContainer>
     </ChartContainer>
   );
 
   const tagCloud = (
     <CardContainer>
-      <KeywordCloud />
+      <KeywordCloud uid={stateFromPrePage.clientInfo[5]} />
     </CardContainer>
   );
 
   const defaultGreeting = (
     <CardContainer>
-      <Reminder>Client Name: Simon</Reminder>
+      <Reminder>Client Name: {clientName}</Reminder>
       <Reminder>Select an AWARE category to see more details.</Reminder>
     </CardContainer>
   );

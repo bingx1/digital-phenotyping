@@ -44,7 +44,7 @@ const dummyChartData = {
   ],
 };
 
-function AppUsageChart() {
+function AppUsageChart(props: any) {
   const [barState, setBarState] = useState({
     options: {},
     series: [],
@@ -58,7 +58,7 @@ function AppUsageChart() {
       .post(
         'https://digital-phenotyping.herokuapp.com/appForeground/',
         {
-          uid: 1,
+          uid: props.uid,
           startDate: 1641634738549,
           endDate: 1641901876549,
         },

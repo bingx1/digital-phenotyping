@@ -50,7 +50,7 @@ const locationNumberData = {
   },
 };
 
-function LocationNumberHeatMapChart() {
+function LocationNumberHeatMapChart(props: any) {
   const [barState, setBarState] = useState({
     options: {},
     series: [],
@@ -64,7 +64,7 @@ function LocationNumberHeatMapChart() {
       .post(
         'https://digital-phenotyping.herokuapp.com/locationServer/NumbersOfLocation',
         {
-          uid: 1,
+          uid: props.uid,
           endDate: 1642299999549,
         },
         {

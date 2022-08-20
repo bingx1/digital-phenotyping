@@ -83,7 +83,7 @@ const durationData = {
   },
 };
 
-function UnlockDurationChart() {
+function UnlockDurationChart(props: any) {
   const [barState, setBarState] = useState({
     options: {},
     series: [],
@@ -98,7 +98,7 @@ function UnlockDurationChart() {
       .post(
         'https://digital-phenotyping.herokuapp.com/screenServer/ScreenUnlocked',
         {
-          uid: 1,
+          uid: props.uid,
           endDate: 1642299999549,
         },
         {

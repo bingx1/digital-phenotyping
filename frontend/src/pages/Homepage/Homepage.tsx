@@ -14,17 +14,35 @@ import createCache from '@emotion/cache';
 import COLORS from '../../constant/Colors';
 import axios from 'axios';
 import { Log } from '../../components/common/Logger';
+import { LargeNumberLike } from 'crypto';
+
+interface iResData {
+  age: number
+  aware_device_id:  string
+  client_title: string
+  date_of_birth: string
+  facebook_id: string 
+  first_name: string
+  last_name: string 
+  last_update: string 
+  status: string 
+  text_notes: string 
+  twitter_id: string 
+  uid: LargeNumberLike
+}
+
 const muiCache = createCache({
   key: 'mui-datatables',
   prepend: true,
 });
 
-const dummyData = [['Gabby George', 'Dr', 23, 'Normal', '2022-03-22', '2123']];
+
 export default function Homepage() {
   let navigate = useNavigate();
-  const [clientData, setClientData] = useState(dummyData);
+  const [clientData, setClientData] = useState<any[]>([]);
 
-  let userInfo = sessionStorage.getItem('userInfo')
+  // @ts-ignore
+  let userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
 
   useEffect(() => {
     if (!userInfo) {
@@ -34,17 +52,31 @@ export default function Homepage() {
   }, []);
 
   const fetchClientList = () =>{
-    let  clinicianId = 1
-    if(userInfo !== null){
-      clinicianId = JSON.parse(userInfo).clinician_info.id
-    }
+    let  clinicianId = userInfo.user_info.id
+    let clientsList: any[] = []
     axios
-      .post('https://digital-phenotyping.herokuapp.com/userServer/ClientInfoList/', {
+      .post('https://digital-phenotyping.herokuapp.com/userServer/ClientInfoList', {
         id: clinicianId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo!.access}`,
+        },
       })
       .then((response) => {
-        Log('Fetched SMS data..', response.data);
-         
+        Log('Fetched Clients data..', response.data);
+        let rawData = response.data
+        rawData.forEach((item: iResData) =>{
+          let temp: any[] = []
+          temp.push(item.first_name + ' ' + item.last_name)
+          temp.push(item.client_title)
+          temp.push(item.age)
+          temp.push(item.status)
+          temp.push(item.last_update.substring(0,10))
+          temp.push(item.uid)
+          clientsList.push(temp)
+        })
+        setClientData(clientsList)
       })
       .catch((err) => {
         Log(err);
@@ -67,7 +99,7 @@ export default function Homepage() {
     {
       name: 'Age',
       options: {
-        customHeadLabelRender: () => <TableHeader>Name</TableHeader>,
+        customHeadLabelRender: () => <TableHeader>Age</TableHeader>,
       },
     },
     {
@@ -93,7 +125,7 @@ export default function Homepage() {
           return (
             <ViewBtn
               variant="contained"
-              onClick={() => navigate('/infodetailspage', { state: { id: clientData[dataIndex] } })}
+              onClick={() => navigate('/infodetailspage', { state: { clientInfo: clientData[dataIndex] } })}
             >
               View
             </ViewBtn>
@@ -150,7 +182,7 @@ const MainContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
+  padding-bottom: 50px;
 `;
 const TableHeader = styled.div`
   font-weight: bolder;

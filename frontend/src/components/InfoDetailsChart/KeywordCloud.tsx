@@ -60,7 +60,7 @@ const options = {
     fontSizes: fontSizes
   };
 
-function KeywordCloud() {
+function KeywordCloud(props: any) {
     return (
         <ReactWordcloud options={options} words={data} />
     )

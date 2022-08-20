@@ -47,7 +47,7 @@ const dummyCallsData = {
   },
 };
 
-function CallsUsageChart() {
+function CallsUsageChart(props: any) {
   const [callsState, setCallsState] = useState({
     options: {},
     series: [],
@@ -61,7 +61,7 @@ function CallsUsageChart() {
       .post(
         'https://digital-phenotyping.herokuapp.com/dataServer/calls',
         {
-          uid: 1,
+          uid: props.uid,
           startDate: 1641634738549,
           endDate: 1642309999999,
         },

@@ -70,7 +70,7 @@ const screenDummayData = {
   },
 };
 
-function UnlockTimesChart() {
+function UnlockTimesChart(props: any) {
   const [barState, setBarState] = useState({
     options: {},
     series: [],
@@ -85,7 +85,7 @@ function UnlockTimesChart() {
       .post(
         'https://digital-phenotyping.herokuapp.com/screenServer/ScreenUnlocked',
         {
-          uid: 1,
+          uid: props.uid,
           endDate: 1642299999549,
         },
         {

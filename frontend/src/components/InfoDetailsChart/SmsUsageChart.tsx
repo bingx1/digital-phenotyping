@@ -55,7 +55,7 @@ const dummySMSData = {
   },
 };
 
-function SmsUsageChart() {
+function SmsUsageChart(props: any) {
   const [smsState, setSMSState] = useState({
     options: {},
     series: [],
@@ -70,7 +70,7 @@ function SmsUsageChart() {
       .post(
         'https://digital-phenotyping.herokuapp.com/sms/',
         {
-          uid: 1,
+          uid: props.uid,
           startDate: 1641634738549,
           endDate: 1642209999999,
         },
