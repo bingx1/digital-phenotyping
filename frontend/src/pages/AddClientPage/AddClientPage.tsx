@@ -27,6 +27,7 @@ function InfoDetailsPage() {
   const [awareId, setAwareId] = useState('');
   const [showSuccessBar, setShowSuccessBar] = useState(false)
   const [showErrorBar, setShowErrorBar] = useState(false)
+  const [errMsg, setErrMsg] = useState('')
 
 
   const handleClientTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,6 +78,12 @@ function InfoDetailsPage() {
   };
 
   const addClient = () =>{
+    
+    if(clientTitle === '' || firstName === '' || lastName === '' || awareId === '' || dateOfBirth === null){
+      setErrMsg('Please fill out all required fields.')
+      setShowErrorBar(true)
+      return
+    }
     console.log(clientTitle)
     console.log(firstName)
     console.log(lastName)
@@ -105,6 +112,10 @@ function InfoDetailsPage() {
         Log('Fetched Clients data..', response.data);
         if(response.data === 200){
           setShowSuccessBar(true)
+          setTimeout(()=>{
+            navigate('/homepage');
+          },1500)
+          
         }else{
           setShowErrorBar(true)
         }
@@ -112,6 +123,7 @@ function InfoDetailsPage() {
       })
       .catch((err) => {
         Log(err);
+        setErrMsg('Failed to add a client.')
         setShowErrorBar(true)
       });
   }
@@ -129,9 +141,9 @@ function InfoDetailsPage() {
         <NameAvatar />
       </Header>
       <CardContainer>
-        <TextField value={clientTitle} onChange={handleClientTitle} margin="dense"  placeholder='Dr' label="Client Title" variant="standard" />
-        <TextField value={firstName} onChange={handleFirstName} placeholder='Simon'  margin="dense" label="First Name" variant="standard" />
-        <TextField value={lastName} onChange={handleLastName} placeholder="D'Alfonso"  margin="dense" label="Last Name" variant="standard" />
+        <TextField required value={clientTitle} onChange={handleClientTitle} margin="dense"  placeholder='Dr' label="Client Title" variant="standard" />
+        <TextField required value={firstName} onChange={handleFirstName} placeholder='Simon'  margin="dense" label="First Name" variant="standard" />
+        <TextField required value={lastName} onChange={handleLastName} placeholder="D'Alfonso"  margin="dense" label="Last Name" variant="standard" />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
           label="Date of Birth" 
@@ -140,14 +152,14 @@ function InfoDetailsPage() {
             setDateOfBirth(newValue);
           }}
           inputFormat="yyyy-mm-dd"
-          renderInput={(params:any) => <TextField margin="dense" variant="standard" {...params} />}
+          renderInput={(params:any) => <TextField required margin="dense" variant="standard" {...params} />}
           />
         </LocalizationProvider>
         {/* <TextField value={dateOfBirth} onChange={handleDateOfBirth} error={dateOfBirthErr}  placeholder='1981-02-30'  margin="dense" label="Date of Birth" variant="standard" /> */}
         <TextField value={textNotes} onChange={handleTextNotes} margin="dense" label="Text Notes" variant="standard" />
         <TextField value={twitterId} onChange={handleTwitterId} placeholder='@sjdalf'  margin="dense" label="Twitter ID" variant="standard" />
         <TextField value={facebookId} onChange={handleFacebookId} placeholder='simon.dalfonso'  margin="dense" label="Facebook ID" variant="standard" />
-        <TextField value={awareId} onChange={handleAwareId} placeholder='cf62dfa9-e22d-426f-b5a6-e4f2d72fc66a'  margin="dense" label="AWARE device ID" variant="standard" />
+        <TextField required value={awareId} onChange={handleAwareId} placeholder='cf62dfa9-e22d-426f-b5a6-e4f2d72fc66a'  margin="dense" label="AWARE device ID" variant="standard" />
         <BtnContainer>
         <Button fullWidth onClick={addClient} variant='contained' color='info'>
           Add
@@ -168,7 +180,7 @@ function InfoDetailsPage() {
         onClose={closeErrorBar}
         autoHideDuration={3000}
       >
-        <Alert severity='error'>Failed to add a client.</Alert>
+        <Alert severity='error'>{errMsg}</Alert>
       </Snackbar>
     </MainContainer>
   );
