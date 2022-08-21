@@ -38,10 +38,10 @@ def retrieve_2weeks_tweets():
 
     try:
         for id in twitter_idList:
-            word_cloud = get_recent_tweets(id)
+            word_cloud = dict(get_recent_tweets(id))
         
             if models.TwitterWordCloud.objects.filter(twitter_id=id).exists():
-                for (word, occurance) in word_cloud:
+                for (word, occurance) in word_cloud.items():
                     if models.TwitterWordCloud.objects.filter(twitter_id=id,word=word).exists():
                         record = models.TwitterWordCloud.objects.get(twitter_id=id,word=word)
                         record.occurance = record.occurance + occurance
@@ -53,7 +53,7 @@ def retrieve_2weeks_tweets():
                             occurance=occurance
                         )
             else:
-                for (word, occurance) in word_cloud:
+                for (word, occurance) in word_cloud.items():
                     models.TwitterWordCloud.objects.create(
                         twitter_id=id,
                         word=word,
