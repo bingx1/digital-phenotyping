@@ -25,6 +25,8 @@ function NameAvatar() {
     let userInfo = sessionStorage.getItem('userInfo');
     if (userInfo !== null) {
       userInfo = JSON.parse(userInfo);
+    }else{
+      return
     }
     //@ts-ignore
     let name = userInfo!.user_info.first_name + ' ' + userInfo!.user_info.last_name;

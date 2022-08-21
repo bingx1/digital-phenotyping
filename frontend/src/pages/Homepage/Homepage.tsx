@@ -41,18 +41,20 @@ export default function Homepage() {
   let navigate = useNavigate();
   const [clientData, setClientData] = useState<any[]>([]);
 
-  // @ts-ignore
-  let userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+  
+  let userInfo = sessionStorage.getItem('userInfo');
 
   useEffect(() => {
     if (!userInfo) {
       navigate('/');
+      return
     }
     fetchClientList()
   }, []);
 
   const fetchClientList = () =>{
-    let  clinicianId = userInfo.user_info.id
+    let clinicianId = JSON.parse(userInfo!).user_info.id
+    let token = JSON.parse(userInfo!).access
     let clientsList: any[] = []
     axios
       .post('https://digital-phenotyping.herokuapp.com/userServer/ClientInfoList', {
@@ -60,7 +62,7 @@ export default function Homepage() {
       },
       {
         headers: {
-          Authorization: `Bearer ${userInfo!.access}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {

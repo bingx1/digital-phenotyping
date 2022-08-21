@@ -27,17 +27,22 @@ import KeywordCloud from '../../components/InfoDetailsChart/KeywordCloud';
 function InfoDetailsPage() {
   let navigate = useNavigate();
   let location = useLocation();
-  const [patientId, setPatientId] = useState('123');
+  const [patientId, setPatientId] = useState(1);
   const [clientName, setClientName] = useState('')
   const [curSelected, setCurSelected] = useState('Application');
+  const [loadingPage, setLoadingpage] = useState(true)
+
   let token = sessionStorage.getItem('userInfo');
-  let stateFromPrePage: {clientInfo: string[]} = location.state as {clientInfo: string[]}
+  let stateFromPrePage: {clientInfo: any[]} = location.state as {clientInfo: any[]}
   useEffect(() => {
-    
-    setClientName(stateFromPrePage.clientInfo[0])
-    if (!token) {
+    if (!token || stateFromPrePage.clientInfo === null) {
       navigate('/');
+      return
     }
+    setPatientId(stateFromPrePage.clientInfo[5])
+    setLoadingpage(false)
+    setClientName(stateFromPrePage.clientInfo[0])
+    
   }, []);
   const selected = (name: string) => {
     Log(name);
@@ -48,10 +53,10 @@ function InfoDetailsPage() {
   const appChart = (
     <ChartContainer>
       <CardContainer>
-        <AppUsageChart uid={stateFromPrePage.clientInfo[5]} />
+        <AppUsageChart uid={patientId} />
       </CardContainer>
       <CardContainer>
-        <CategoryChart uid={stateFromPrePage.clientInfo[5]}/>
+        <CategoryChart uid={patientId}/>
       </CardContainer>
     </ChartContainer>
   );
@@ -60,10 +65,10 @@ function InfoDetailsPage() {
   const comChart = (
     <ChartContainer>
       <CardContainer>
-        <SmsUsageChart uid={stateFromPrePage.clientInfo[5]} />
+        <SmsUsageChart uid={patientId} />
       </CardContainer>
       <CardContainer>
-        <CallsUsageChart uid={stateFromPrePage.clientInfo[5]} />
+        <CallsUsageChart uid={patientId} />
       </CardContainer>
     </ChartContainer>
   );
@@ -72,10 +77,10 @@ function InfoDetailsPage() {
   const locChart = (
     <ChartContainer>
       <CardContainer>
-        <LocationNumberHeatMapChart uid={stateFromPrePage.clientInfo[5]} />
+        <LocationNumberHeatMapChart uid={patientId} />
       </CardContainer>
       <CardContainer>
-        <LocationNumberColumnChart uid={stateFromPrePage.clientInfo[5]} />
+        <LocationNumberColumnChart uid={patientId} />
       </CardContainer>
     </ChartContainer>
   );
@@ -84,17 +89,17 @@ function InfoDetailsPage() {
   const screenChart = (
     <ChartContainer>
       <CardContainer>
-        <UnlockDurationChart uid={stateFromPrePage.clientInfo[5]} />
+        <UnlockDurationChart uid={patientId} />
       </CardContainer>
       <CardContainer>
-        <UnlockTimesChart uid={stateFromPrePage.clientInfo[5]} />
+        <UnlockTimesChart uid={patientId} />
       </CardContainer>
     </ChartContainer>
   );
 
   const tagCloud = (
     <CardContainer>
-      <KeywordCloud uid={stateFromPrePage.clientInfo[5]} />
+      <KeywordCloud uid={patientId} />
     </CardContainer>
   );
 
@@ -127,6 +132,8 @@ function InfoDetailsPage() {
 
   return (
     <MainContainer>
+      {loadingPage ? <></> : 
+      <>
       <Header onClick={navBack}>
         <Link to='/homepage'>
           <NavTitle title='Client Details' showArrowBack={true} />
@@ -182,6 +189,7 @@ function InfoDetailsPage() {
 
         {chartToShow}
       </SubContainer>
+      </>}
     </MainContainer>
   );
 }
