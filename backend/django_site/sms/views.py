@@ -14,11 +14,12 @@ class QuerySMS(APIView):
     @staticmethod
     def get(request):
 
-        req = json.loads(request.body.decode().replace("'", "\""))
-        uid = req.get('id')
-        twitter_id = models.TbClient.objects.get(uid=uid).twitter_id
-        # print("tc.retrieve_2weeks_tweets_manul(twitter_id)")
-        tc.retrieve_2weeks_tweets_manul(twitter_id)
+        # req = json.loads(request.body.decode().replace("'", "\""))
+        # uid = req.get('id')
+        # twitter_id = models.TbClient.objects.get(uid=uid).twitter_id
+        
+        # tc.retrieve_2weeks_tweets_manul(twitter_id)
+
         # GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY','1')
         # print(GOOGLE_API_KEY)
         # gmaps = googlemaps.Client(key=GOOGLE_API_KEY)
