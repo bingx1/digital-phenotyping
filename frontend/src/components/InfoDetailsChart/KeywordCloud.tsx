@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ReactWordcloud from "react-wordcloud";
 import COLORS from '../../constant/Colors';
 
-const data = [
+let data = [
     {
         text: "R",
         value: 55
@@ -51,7 +51,7 @@ const data = [
   ]
 
 const angles:[number, number] = [-10, 10]
-const fontSizes:[number, number] = [20,80]
+const fontSizes:[number, number] = [30,150]
 
 const options = {
     enableTooltip: true,
@@ -75,7 +75,7 @@ function KeywordCloud(props: any) {
           .post(
             'https://digital-phenotyping.herokuapp.com/dataServer/twitter_demo',
             {
-              uid: props.uid,
+              id: props.uid,
             },
             {
               headers: {
@@ -85,11 +85,18 @@ function KeywordCloud(props: any) {
           )
           .then((response) => {
             console.log('Fetched data..', response.data.data);
+
+            let keywordData = []
+            for (let [key, value] of Object.entries(response.data.data)) {
+              keywordData.push({text:key, value:Number(value)})
+            }
+            data = keywordData
+            console.log(keywordData)
             
           });
       };
     return (
-        <ReactWordcloud options={options} words={data} />
+      <ReactWordcloud options={options} words={data} />
     )
 }
 
