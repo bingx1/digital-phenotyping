@@ -8,17 +8,25 @@ import googlemaps
 import pandas as pd
 # import os
 import utils.twitterCrawler as tc
+from utils import tw_cbd_credentials
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse, HttpResponseBadRequest
+import tweepy
 class QuerySMS(APIView):
     @staticmethod
     def get(request):
 
         # req = json.loads(request.body.decode().replace("'", "\""))
-        # uid = req.get('id')
-        # twitter_id = models.TbClient.objects.get(uid=uid).twitter_id
+        # tid = req.get('id')
+        # client = tweepy.Client(bearer_token=tw_cbd_credentials.bearer_token)
+        # twitter_id = client.get_user(username=tid).data.id
+        # print(twitter_id)
+
+        req = json.loads(request.body.decode().replace("'", "\""))
+        uid = req.get('id')
+        twitter_id = models.TbClient.objects.get(uid=uid).twitter_id
         
-        # tc.retrieve_2weeks_tweets_manul(twitter_id)
+        tc.retrieve_2weeks_tweets_manul(twitter_id)
 
         # GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY','1')
         # print(GOOGLE_API_KEY)

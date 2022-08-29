@@ -50,14 +50,14 @@ def retrieve_2weeks_tweets():
                         models.TwitterWordCloud.objects.create(
                             twitter_id=id,
                             word=word,
-                            occurance=occurance
+                            occurrence=occurance
                         )
             else:
                 for (word, occurance) in word_cloud.items():
                     models.TwitterWordCloud.objects.create(
                         twitter_id=id,
                         word=word,
-                        occurance=occurance
+                        occurrence=occurance
                     )
                 
     except:
@@ -81,14 +81,14 @@ def retrieve_2weeks_tweets_manul(id):
                     models.TwitterWordCloud.objects.create(
                         twitter_id=id,
                         word=word,
-                        occurance=occurance
+                        occurrence=occurance
                     )
         else:
             for word,occurance in word_cloud.items():
                 models.TwitterWordCloud.objects.create(
                     twitter_id=id,
                     word=word,
-                    occurance=occurance
+                    occurrence=occurance
                 )
                 
     except:
@@ -137,7 +137,7 @@ def get_recent_tweets(user_id):
     #                 id=user_id).items(100)
 
     client = tw.Client(bearer_token=tw_cbd_credentials.bearer_token)
-    max_length = 50
+    max_length = 100
     tweets = client.get_users_tweets(id=user_id,max_results=max_length).data
     print("1")
 
