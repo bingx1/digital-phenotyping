@@ -41,23 +41,23 @@ def retrieve_2weeks_tweets():
             word_cloud = dict(get_recent_tweets(id))
         
             if models.TwitterWordCloud.objects.filter(twitter_id=id).exists():
-                for (word, occurance) in word_cloud.items():
+                for (word, occurrence) in word_cloud.items():
                     if models.TwitterWordCloud.objects.filter(twitter_id=id,word=word).exists():
                         record = models.TwitterWordCloud.objects.get(twitter_id=id,word=word)
-                        record.occurance = record.occurance + occurance
+                        record.occurrence = record.occurrence + occurrence
                         record.save()
                     else:
                         models.TwitterWordCloud.objects.create(
                             twitter_id=id,
                             word=word,
-                            occurrence=occurance
+                            occurrence=occurrence
                         )
             else:
-                for (word, occurance) in word_cloud.items():
+                for (word, occurrence) in word_cloud.items():
                     models.TwitterWordCloud.objects.create(
                         twitter_id=id,
                         word=word,
-                        occurrence=occurance
+                        occurrence=occurrence
                     )
                 
     except:
@@ -72,23 +72,23 @@ def retrieve_2weeks_tweets_manul(id):
         # print(word_cloud.items()[0])
     
         if models.TwitterWordCloud.objects.filter(twitter_id=id).exists():
-            for (word, occurance) in word_cloud.items():
+            for (word, occurrence) in word_cloud.items():
                 if models.TwitterWordCloud.objects.filter(twitter_id=id,word=word).exists():
                     record = models.TwitterWordCloud.objects.get(twitter_id=id,word=word)
-                    record.occurance = record.occurance + occurance
+                    record.occurrence = record.occurrence + occurrence
                     record.save()
                 else:
                     models.TwitterWordCloud.objects.create(
                         twitter_id=id,
                         word=word,
-                        occurrence=occurance
+                        occurrence=occurrence
                     )
         else:
-            for word,occurance in word_cloud.items():
+            for word,occurrence in word_cloud.items():
                 models.TwitterWordCloud.objects.create(
                     twitter_id=id,
                     word=word,
-                    occurrence=occurance
+                    occurrence=occurrence
                 )
                 
     except:
