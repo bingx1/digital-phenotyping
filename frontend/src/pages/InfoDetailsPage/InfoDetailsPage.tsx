@@ -228,6 +228,7 @@ const IconText = styled.div<Props>`
   background-color: ${(props: Props) =>
     props.name === props.curSelected ? COLORS.primary : COLORS.white};
   border-radius: 10px;
+  box-shadow: 2px 2px 15px 1px ${COLORS.shadow};
   display: flex;
   width: 180px;
   flex-direction: column;

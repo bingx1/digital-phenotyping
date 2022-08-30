@@ -11,13 +11,12 @@ const dummyCallsData = {
     chart: {
       type: 'bar',
       height: 440,
-      stacked: true,
     },
     colors: ['#008FFB', '#FF4560', '#775DD0'],
     plotOptions: {
       bar: {
-        horizontal: true,
-        barHeight: '80%',
+        horizontal: false,
+        endingShape: 'rounded'
       },
     },
     stroke: {

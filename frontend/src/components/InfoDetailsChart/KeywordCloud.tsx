@@ -73,9 +73,8 @@ function KeywordCloud(props: any) {
         console.log("UID",props.uid)
         axios
           .post(
-            'https://digital-phenotyping.herokuapp.com/dataServer/twitter_demo',
-            {
-              uid: props.uid,
+            'https://digital-phenotyping.herokuapp.com/dataServer/twitter_demo',{
+                uid: props.uid
             },
             {
               headers: {

@@ -4,6 +4,15 @@ import styled from 'styled-components';
 import COLORS from '../../constant/Colors';
 import { Log } from '../common/Logger';
 import axios from 'axios';
+import { DateRangePicker, Stack } from 'rsuite';
+import subDays from 'date-fns/subDays';
+import startOfWeek from 'date-fns/startOfWeek';
+import endOfWeek from 'date-fns/endOfWeek';
+import addDays from 'date-fns/addDays';
+import startOfMonth from 'date-fns/startOfMonth';
+import endOfMonth from 'date-fns/endOfMonth';
+import addMonths from 'date-fns/addMonths';  
+import DateRangeSelector from '../common/DateRangeSelector';
 // dummy data for app time usage
 const dummyChartData = {
   options: {
@@ -19,48 +28,36 @@ const dummyChartData = {
         fontWeight: 'bold',
         color: `${COLORS.text_2}`,
       },
-    },
-    fill: {
-      colors: [`${COLORS.primary}`],
-    },
-    chart: {
-      id: 'basic-bar',
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 4,
-        horizontal: true,
-      },
-    },
-    xaxis: {
-      categories: [] as any[],
-    },
+    }, 
+    chart: { 
+      width: 380,
+      type: 'pie',
+    }, 
+    labels: [] as any[], 
   },
-  series: [
-    {
-      name: 'Times Used',
-      data: [100, 78, 78, 43, 10, 22, 56],
-    },
-  ],
-};
+  series: [] as any[],
+}; 
 
 function AppUsageChart(props: any) {
   const [barState, setBarState] = useState({
     options: {},
     series: [],
   });
+  const [startDateVal, setStartDateVal] = useState(1641634738549)
+  const [endDateVal, setEndDateVal] = useState(1641901876549)
   const fetchData = () => {
     let curDate = new Date();
     // @ts-ignore
     let userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-
+    console.log(startDateVal)
+    console.log(endDateVal)
     axios
       .post(
         'https://digital-phenotyping.herokuapp.com/appForeground/',
         {
           uid: props.uid,
-          startDate: 1641634738549,
-          endDate: 1641901876549,
+          startDate: startDateVal,
+          endDate: endDateVal,
         },
         {
           headers: {
@@ -76,32 +73,32 @@ function AppUsageChart(props: any) {
         for (let i = 0; i < response.data[0].length; i++) {
           if (response.data[1][i] >= 1) {
             categories.push(response.data[0][i]);
-            series.push(response.data[1][i]);
+            series.push(Math.round(response.data[1][i] * 100) / 100);
           }
         }
-
-        res.options.xaxis.categories = categories;
-        res.series[0].data = series;
+        
+        res.options.labels = categories;
+        res.series = series;
         // @ts-ignore
-        setBarState(res);
+        setBarState(pre => ({...pre,...res}));
       });
   };
   useEffect(() => {
     Log('App usage chart...');
     fetchData();
     //setBarState(dummyChartData);
-  }, []);
-
+  }, [startDateVal]);
+ 
   return (
     <Container>
-      <DateText>{`${new Date(1641634738549).toISOString().slice(0, 10)} - ${new Date(1641901876549)
-        .toISOString()
-        .slice(0, 10)}`}</DateText>
+      <DateWrapper>
+        <DateRangeSelector setStartDate={setStartDateVal} setEndDate={setEndDateVal} />
+      </DateWrapper>
 
       <Chart
         options={barState.options}
         series={barState.series}
-        type='bar'
+        type='pie'
         width='600'
         height='400'
       />
@@ -114,6 +111,13 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const DateText = styled.div`
-  font-size: 15px;
+const DateWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
+const Title = styled.div`
+  font-size: 15px;
+  padding-right: 30px;
+  color: ${COLORS.text};
+`

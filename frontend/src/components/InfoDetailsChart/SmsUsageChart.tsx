@@ -18,14 +18,13 @@ const dummySMSData = {
   options: {
     chart: {
       type: 'bar',
-      height: 440,
-      stacked: true,
+      height: 440, 
     },
     colors: ['#008FFB', '#FF4560'],
     plotOptions: {
       bar: {
-        horizontal: true,
-        barHeight: '80%',
+        horizontal: false, 
+        endingShape: 'rounded'
       },
     },
     stroke: {
