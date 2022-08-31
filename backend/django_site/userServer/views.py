@@ -22,6 +22,7 @@ from datetime import datetime
 
 from utils import tw_cbd_credentials
 
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
@@ -67,51 +68,6 @@ class ClientProfile(APIView):
         return Response(client_result.values()[0])
 
 
-def age(birthdate):
-    today = datetime.today()
-    age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
-    return age
-
-
-def get_client_form(req):
-    twitter_id, twitter_id_int = twitter_id_check(req.get('twitterId'))
-    if twitter_id == "error":
-        return twitter_id_int
-    client_form = {
-        'clinician_id': req.get('clinicianId'),
-        'client_title': req.get('clientTitle'),
-        'first_name': str.capitalize(req.get('firstName')),
-        'last_name': str.capitalize(req.get('lastName')),
-        'date_of_birth': req.get('dateOfBirth'),
-        'age': age(datetime.strptime(req.get('dateOfBirth'), '%Y-%m-%d')),
-        'text_notes': req.get('textNotes'),
-        'twitter_id': twitter_id,
-        'twitter_id_int': twitter_id_int,
-        'facebook_id': req.get('facebookId'),
-        'aware_device_id': req.get('awareDeviceId'),
-    }
-    return client_form
-
-def twitter_id_check(twitter_id):
-    client = tweepy.Client(bearer_token=tw_cbd_credentials.bearer_token)
-
-    username = twitter_id
-
-    while username[0] == '@':
-        username = username[1:]
-
-    if not bool(re.match(r'[a-zA-Z0-9_]{1,15}$', username)) :
-        return "error","wrongformat"
-    
-    twitter_account = client.get_user(username=username)
-    
-    if twitter_account.data is None:
-        return "error","notexist"
-
-    return twitter_id, twitter_account.data.id
-        
-
-
 class UpdateClientProfile(APIView):
     @staticmethod
     def post(request):
@@ -129,8 +85,8 @@ class UpdateClientProfile(APIView):
 class AddClient(APIView):
     @staticmethod
     def post(request):
-        req = json.loads(request.body.decode().replace("'", "\""))
-        
+        req = json.loads(request.body.decode())
+
         add_form = get_client_form(req)
         if add_form == "notexist":
             return Response("Twitter account not exists!")
@@ -164,4 +120,50 @@ class DeleteClient(APIView):
         req = json.loads(request.body.decode().replace("'", "\""))
         uid = req.get('uid')
         models.TbClient.objects.filter(uid=uid).delete()
+        models.AuthUser.objects.filter(id=uid).delete()
         return Response(200)
+
+
+def age(birthdate):
+    today = datetime.today()
+    age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    return age
+
+
+def get_client_form(req):
+    twitter_id, twitter_id_int = twitter_id_check(req.get('twitterId'))
+    if twitter_id == "error":
+        return twitter_id_int
+    client_form = {
+        'clinician_id': req.get('clinicianId'),
+        'client_title': req.get('clientTitle'),
+        'first_name': str.capitalize(req.get('firstName')),
+        'last_name': str.capitalize(req.get('lastName')),
+        'date_of_birth': req.get('dateOfBirth'),
+        'age': age(datetime.strptime(req.get('dateOfBirth'), '%Y-%m-%d')),
+        'text_notes': req.get('textNotes'),
+        'twitter_id': twitter_id,
+        'twitter_id_int': twitter_id_int,
+        'facebook_id': req.get('facebookId'),
+        'aware_device_id': req.get('awareDeviceId'),
+    }
+    return client_form
+
+
+def twitter_id_check(twitter_id):
+    client = tweepy.Client(bearer_token=tw_cbd_credentials.bearer_token)
+
+    username = twitter_id
+
+    while username[0] == '@':
+        username = username[1:]
+
+    if not bool(re.match(r'[a-zA-Z0-9_]{1,15}$', username)):
+        return "error", "wrongformat"
+
+    twitter_account = client.get_user(username=username)
+
+    if twitter_account.data is None:
+        return "error", "notexist"
+
+    return twitter_id, twitter_account.data.id
