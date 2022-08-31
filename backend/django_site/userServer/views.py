@@ -100,7 +100,7 @@ def twitter_id_check(twitter_id):
     while username[0] == '@':
         username = username[1:]
 
-    if not bool(re.match(r'[a-zA-Z0-9_]+$', username)):
+    if not bool(re.match(r'[a-zA-Z0-9_]{1,15}$', username)) :
         return "error","wrongformat"
     
     twitter_account = client.get_user(username=username)
