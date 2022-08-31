@@ -2,6 +2,7 @@ import datetime
 import json
 import time
 import tweepy
+import re
 
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
@@ -73,6 +74,9 @@ def age(birthdate):
 
 
 def get_client_form(req):
+    twitter_id, twitter_id_int = twitter_id_check(req.get('twitterId'))
+    if twitter_id == "error":
+        return twitter_id_int
     client_form = {
         'clinician_id': req.get('clinicianId'),
         'client_title': req.get('clientTitle'),
@@ -81,11 +85,31 @@ def get_client_form(req):
         'date_of_birth': req.get('dateOfBirth'),
         'age': age(datetime.strptime(req.get('dateOfBirth'), '%Y-%m-%d')),
         'text_notes': req.get('textNotes'),
-        'twitter_id': req.get('twitterId'),
+        'twitter_id': twitter_id,
+        'twitter_id_int': twitter_id_int,
         'facebook_id': req.get('facebookId'),
         'aware_device_id': req.get('awareDeviceId'),
     }
     return client_form
+
+def twitter_id_check(twitter_id):
+    client = tweepy.Client(bearer_token=tw_cbd_credentials.bearer_token)
+
+    username = twitter_id
+
+    while username[0] == '@':
+        username = username[1:]
+
+    if not bool(re.match(r'[a-zA-Z0-9_]+$', username)):
+        return "error","wrongformat"
+    
+    twitter_account = client.get_user(username=username)
+    
+    if twitter_account.data is None:
+        return "error","notexist"
+
+    return twitter_id, twitter_account.data.id
+        
 
 
 class UpdateClientProfile(APIView):
@@ -94,6 +118,10 @@ class UpdateClientProfile(APIView):
         req = json.loads(request.body.decode().replace("'", "\""))
         uid = req.get('uid')
         change_form = get_client_form(req)
+        if change_form == "notexist":
+            return Response("Twitter account not exists!")
+        elif change_form == "wrongformat":
+            return Response("Please check Twitter id format!")
         models.TbClient.objects.filter(uid=uid).update(**change_form)
         return Response(200)
 
@@ -102,12 +130,12 @@ class AddClient(APIView):
     @staticmethod
     def post(request):
         req = json.loads(request.body.decode().replace("'", "\""))
+        
         add_form = get_client_form(req)
-
-        client = tweepy.Client(bearer_token=tw_cbd_credentials.bearer_token)
-        username = add_form.get('twitter_id')
-        twitter_id = client.get_user(username=username).data.id
-        add_form['twitter_id'] = twitter_id
+        if add_form == "notexist":
+            return Response("Twitter account not exists!")
+        elif add_form == "wrongformat":
+            return Response("Please check Twitter id format!")
 
         username = str.lower(add_form.get('first_name') + add_form.get('last_name'))
         num_uname = models.AuthUser.objects.filter(username__icontains=username).count()
