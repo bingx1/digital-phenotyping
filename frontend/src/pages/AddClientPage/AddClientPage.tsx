@@ -133,7 +133,7 @@ function InfoDetailsPage() {
   return (
     <MainContainer>
       <Header onClick={navBack}>
-        <Link to='/homepage'>
+        <Link style={{ textDecoration: 'none' }} to='/homepage'>
           <NavTitle title='Add a Client' showArrowBack={true} />
         </Link>
         <SearchBar />

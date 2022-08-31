@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DateRangePicker, Stack } from 'rsuite';
+import { DateRangePicker  } from 'rsuite';
 import subDays from 'date-fns/subDays';
 import startOfWeek from 'date-fns/startOfWeek';
 import endOfWeek from 'date-fns/endOfWeek';
@@ -95,6 +95,8 @@ export default function DateRangeSelector(props: any){
     }else{
       let startDate = new Date(val[0]).getTime()
       let endDate = new Date(val[1]).getTime()
+      console.log(startDate)
+      console.log(endDate)
       props.setStartDate(startDate)
       props.setEndDate(endDate)  
     } 

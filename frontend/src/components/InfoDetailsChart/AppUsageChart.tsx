@@ -1,17 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import styled from 'styled-components';
 import COLORS from '../../constant/Colors';
 import { Log } from '../common/Logger';
-import axios from 'axios';
-import { DateRangePicker, Stack } from 'rsuite';
-import subDays from 'date-fns/subDays';
-import startOfWeek from 'date-fns/startOfWeek';
-import endOfWeek from 'date-fns/endOfWeek';
-import addDays from 'date-fns/addDays';
-import startOfMonth from 'date-fns/startOfMonth';
-import endOfMonth from 'date-fns/endOfMonth';
-import addMonths from 'date-fns/addMonths';  
+import axios from 'axios'; 
 import DateRangeSelector from '../common/DateRangeSelector';
 // dummy data for app time usage
 const dummyChartData = {
@@ -39,14 +31,13 @@ const dummyChartData = {
 }; 
 
 function AppUsageChart(props: any) {
-  const [barState, setBarState] = useState({
-    options: {},
-    series: [],
-  });
+  const [options, setOptions] = useState({})
+  const [series, setSeries] = useState([])
+  
   const [startDateVal, setStartDateVal] = useState(1641634738549)
   const [endDateVal, setEndDateVal] = useState(1641901876549)
-  const fetchData = () => {
-    let curDate = new Date();
+  
+  const fetchData = () => { 
     // @ts-ignore
     let userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     console.log(startDateVal)
@@ -68,19 +59,24 @@ function AppUsageChart(props: any) {
       .then((response) => {
         Log('Fetched data..', response.data);
         let res = dummyChartData;
-        let categories = [];
-        let series = [];
+        let categories = [] as any[];
+        let newSeries = [];
         for (let i = 0; i < response.data[0].length; i++) {
           if (response.data[1][i] >= 1) {
             categories.push(response.data[0][i]);
-            series.push(Math.round(response.data[1][i] * 100) / 100);
+            newSeries.push(Math.round(response.data[1][i] * 100) / 100);
           }
         }
         
         res.options.labels = categories;
-        res.series = series;
-        // @ts-ignore
-        setBarState(pre => ({...pre,...res}));
+        res.series = newSeries;
+        setOptions(pre => ({
+          ...pre,
+          //@ts-ignore
+          labels: categories
+        }))
+        //@ts-ignore
+        setSeries([ ...newSeries]) 
       });
   };
   useEffect(() => {
@@ -96,8 +92,8 @@ function AppUsageChart(props: any) {
       </DateWrapper>
 
       <Chart
-        options={barState.options}
-        series={barState.series}
+        options={options}
+        series={series}
         type='pie'
         width='600'
         height='400'
@@ -115,9 +111,4 @@ const DateWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
-const Title = styled.div`
-  font-size: 15px;
-  padding-right: 30px;
-  color: ${COLORS.text};
-`
+`; 
