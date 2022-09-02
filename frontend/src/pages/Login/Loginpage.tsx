@@ -64,7 +64,7 @@ export default function Loginpage() {
         password: password,
       })
       .then((response) => {
-        Log('Fetched SMS data..', response.data);
+        Log('Login data..', response.data);
         if (response.data.access !== undefined) {
           setShowLoginLoading(false)
           sessionStorage.setItem('userInfo', JSON.stringify(response.data));
