@@ -10,6 +10,8 @@ import nltk
 from nltk.corpus import stopwords
 import re
 
+import os
+
 # use this to run crontasks under the background
 from apscheduler.schedulers.background import BackgroundScheduler 
 from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
@@ -34,30 +36,30 @@ except Exception as e:
 
 # retrieve the latest 2 weeks tweets in the database
 def retrieve_2weeks_tweets():
-    twitter_idList = models.TbClient.objects.values("twitter_id")
+    twitter_idList = models.TbClient.objects.values("twitter_id_int")
 
     try:
         for id in twitter_idList:
             word_cloud = dict(get_recent_tweets(id))
         
             if models.TwitterWordCloud.objects.filter(twitter_id=id).exists():
-                for (word, occurance) in word_cloud.items():
+                for (word, occurrence) in word_cloud.items():
                     if models.TwitterWordCloud.objects.filter(twitter_id=id,word=word).exists():
                         record = models.TwitterWordCloud.objects.get(twitter_id=id,word=word)
-                        record.occurance = record.occurance + occurance
+                        record.occurrence = record.occurrence + occurrence
                         record.save()
                     else:
                         models.TwitterWordCloud.objects.create(
                             twitter_id=id,
                             word=word,
-                            occurance=occurance
+                            occurrence=occurrence
                         )
             else:
-                for (word, occurance) in word_cloud.items():
+                for (word, occurrence) in word_cloud.items():
                     models.TwitterWordCloud.objects.create(
                         twitter_id=id,
                         word=word,
-                        occurance=occurance
+                        occurrence=occurrence
                     )
                 
     except:
@@ -72,23 +74,23 @@ def retrieve_2weeks_tweets_manul(id):
         # print(word_cloud.items()[0])
     
         if models.TwitterWordCloud.objects.filter(twitter_id=id).exists():
-            for (word, occurance) in word_cloud.items():
+            for (word, occurrence) in word_cloud.items():
                 if models.TwitterWordCloud.objects.filter(twitter_id=id,word=word).exists():
                     record = models.TwitterWordCloud.objects.get(twitter_id=id,word=word)
-                    record.occurance = record.occurance + occurance
+                    record.occurrence = record.occurrence + occurrence
                     record.save()
                 else:
                     models.TwitterWordCloud.objects.create(
                         twitter_id=id,
                         word=word,
-                        occurance=occurance
+                        occurrence=occurrence
                     )
         else:
-            for word,occurance in word_cloud.items():
+            for word,occurrence in word_cloud.items():
                 models.TwitterWordCloud.objects.create(
                     twitter_id=id,
                     word=word,
-                    occurance=occurance
+                    occurrence=occurrence
                 )
                 
     except:
@@ -118,11 +120,21 @@ def remove_url(txt):
 # Remove stop words from each tweet list of words
 # usage conts_rsw.most_common(15)
 def remove_stop_words(words_in_tweet):
-    nltk.download('stopwords')
+    module_path = os.path.dirname(__file__)
+    file_path = os.path.join(module_path, 'stopwords_list.txt')
+    stopwords_file = open(file_path,"r")
+    try:
+        content = stopwords_file.read()
+        stopwords_list = content.split(",")
+    finally:
+        stopwords_file.close()
+    
+    stopwords = [word.replace('"','').replace(' ','') for word in stopwords_list]
+    # nltk.download('stopwords')
 
-    stop_words = set(stopwords.words('english'))
+    # stop_words = set(stopwords.words('english'))
 
-    return [[word for word in tweet_words if not word in stop_words]
+    return [[word for word in tweet_words if not word in stopwords]
               for tweet_words in words_in_tweet]
 
 def get_recent_tweets(user_id):
@@ -137,7 +149,7 @@ def get_recent_tweets(user_id):
     #                 id=user_id).items(100)
 
     client = tw.Client(bearer_token=tw_cbd_credentials.bearer_token)
-    max_length = 50
+    max_length = 100
     tweets = client.get_users_tweets(id=user_id,max_results=max_length).data
     print("1")
 
