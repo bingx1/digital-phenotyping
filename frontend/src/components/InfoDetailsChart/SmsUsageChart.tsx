@@ -58,8 +58,8 @@ const dummySMSData = {
 };
 
 function SmsUsageChart(props: any) {
-  const [options, setOptions] = useState({});
-  const [series, setSeries] = useState([]);
+  const [options, setOptions] = useState(dummySMSData.options);
+  const [series, setSeries] = useState(dummySMSData.series);
 
   const [startDateVal, setStartDateVal] = useState(1641634738549);
   const [endDateVal, setEndDateVal] = useState(1641901876549);
@@ -103,8 +103,8 @@ function SmsUsageChart(props: any) {
 
         res.series = newSeries;
         if (data.length === 0) {
-          setOptions({});
-          setSeries([]);
+          setOptions(dummySMSData.options);
+          setSeries(dummySMSData.series);
         } else {
           setOptions((pre) => ({
             ...pre,
@@ -128,7 +128,14 @@ function SmsUsageChart(props: any) {
       <DateWrapper>
         <DateRangeSelector setStartDate={setStartDateVal} setEndDate={setEndDateVal} />
       </DateWrapper>
-      <Chart options={options} series={series} type='bar' width='600' height='400' />
+      <Chart
+        //@ts-ignore
+        options={options}
+        series={series}
+        type='bar'
+        width='600'
+        height='400'
+      />
     </Container>
   );
 }

@@ -25,6 +25,7 @@ import {
 
 function UpdateInfo(props: any) {
   let navigate = useNavigate();
+  const [initialTwitter, setInitialTwitter] = useState(props.clientInfo.twitter_id);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [selectedType, setSelectedType] = useState('Update');
   const [confirmMsg, setConfirmMsg] = useState('');
@@ -45,7 +46,9 @@ function UpdateInfo(props: any) {
   const [showSuccessBar, setShowSuccessBar] = useState(false);
   const [showErrorBar, setShowErrorBar] = useState(false);
   const [errMsg, setErrMsg] = useState('');
-
+  useEffect(() => {
+    console.log(props.clientInfo);
+  }, []);
   const handleClientTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setClientTitle(event.target.value);
   };
@@ -85,7 +88,7 @@ function UpdateInfo(props: any) {
     setShowErrorBar(false);
   };
   const handleConfirm = () => {
-    if (selectedType === 'update') {
+    if (selectedType === 'Update') {
       updateClient();
     } else {
       deleteClient();
@@ -132,23 +135,27 @@ function UpdateInfo(props: any) {
     console.log(clientTitle);
     console.log(firstName);
     console.log(lastName);
-    console.log(dateOfBirth!.toISOString().substring(0, 10));
+    console.log(dateOfBirth.toISOString().substring(0, 10));
     console.log(textNotes);
     console.log(twitterId);
+    console.log(initialTwitter === twitterId ? false : true);
     console.log(facebookId);
+
     axios
       .post(
-        URL.BASE_URL + '/userServer/updateClient',
+        URL.BASE_URL + '/userServer/UpdateClientProfile',
         {
+          uid: props.clientInfo.uid,
           clinicianId: clinicianInfo.user_info.id,
           clientTitle: clientTitle,
           firstName: firstName,
           lastName: lastName,
-          dateOfBirth: dateOfBirth!.toISOString().substring(0, 10),
+          dateOfBirth: dateOfBirth.toISOString().substring(0, 10),
           textNotes: textNotes,
           twitterId: twitterId,
           facebookId: facebookId,
           awareDeviceId: awareId,
+          hasTwitterIdChanged: initialTwitter === twitterId ? false : true,
         },
         {
           headers: {
@@ -228,7 +235,7 @@ function UpdateInfo(props: any) {
           onChange={(newValue: Date | null) => {
             setDateOfBirth(newValue);
           }}
-          inputFormat='yyyy-mm-dd'
+          inputFormat='yyyy-MM-dd'
           renderInput={(params: any) => (
             <TextField required margin='dense' variant='standard' {...params} />
           )}

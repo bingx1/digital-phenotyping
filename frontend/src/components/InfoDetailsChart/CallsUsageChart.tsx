@@ -49,8 +49,8 @@ const dummyCallsData = {
 };
 
 function CallsUsageChart(props: any) {
-  const [options, setOptions] = useState({});
-  const [series, setSeries] = useState([]);
+  const [options, setOptions] = useState(dummyCallsData.options);
+  const [series, setSeries] = useState(dummyCallsData.series);
 
   const [startDateVal, setStartDateVal] = useState(1641634738549);
   const [endDateVal, setEndDateVal] = useState(1641901876549);
@@ -115,7 +115,14 @@ function CallsUsageChart(props: any) {
       <DateWrapper>
         <DateRangeSelector setStartDate={setStartDateVal} setEndDate={setEndDateVal} />
       </DateWrapper>
-      <Chart options={options} series={series} type='bar' width='650' height='400' />
+      <Chart
+        //@ts-ignore
+        options={options}
+        series={series}
+        type='bar'
+        width='650'
+        height='400'
+      />
     </Container>
   );
 }
