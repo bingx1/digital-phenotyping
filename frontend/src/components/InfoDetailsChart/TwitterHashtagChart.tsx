@@ -7,27 +7,38 @@ import axios from 'axios';
 import DateRangeSelector from '../common/DateRangeSelector';
 // dummy data for app time usage
 const dummyChartData = {
+  
+  series: [
+    {
+      data: [
+        {x: 'New Delhi',y: 218},
+        {x: 'Kolkata',y: 149},
+        {x: 'Mumbai',y: 184},
+        {x: 'Ahmedabad',y: 55},
+        {x: 'Bangaluru',y: 84},
+        {x: 'Pune',y: 31},
+        {x: 'Chennai',y: 70},
+        {x: 'Jaipur',y: 30},
+        {x: 'Surat',y: 44},
+        {x: 'Hyderabad',y: 68},
+        {x: 'Lucknow',y: 28},
+        {x: 'Indore',y: 19},
+        {x: 'Kanpur',y: 29}
+      ]
+    }
+  ],
   options: {
+    legend: {
+      show: false
+    },
+    chart: {
+      height: 350,
+      type: 'treemap'
+    },
     title: {
-      text: 'App Times Used',
-      align: 'center',
-      margin: 10,
-      offsetX: 0,
-      offsetY: 0,
-      floating: false,
-      style: {
-        fontSize: '14px',
-        fontWeight: 'bold',
-        color: `${COLORS.text_2}`,
-      },
-    }, 
-    chart: { 
-      width: 380,
-      type: 'pie',
-    }, 
-    labels: [] as any[], 
+      text: 'Basic Treemap'
+    }
   },
-  series: [] as any[],
 }; 
 
 function AppUsageChart(props: any) {
@@ -60,28 +71,34 @@ function AppUsageChart(props: any) {
         Log('Fetched hashtag data..', response.data);
         let chart = dummyChartData
         let resData = response.data.data
-        let categories = [] as any[];
-        let newSeries = [];
-
-        for(const [key , val] of Object.entries<any>(resData)){
-          categories.push(key);
-          newSeries.push(val);
-        }
 
         
-        chart.options.labels = categories;
-        chart.series = newSeries;
+        let categories = [] as any[];
+        let newSeries = [];
+        for(const [key , val] of Object.entries<any>(resData)){
+
+          if(val > 3){
+          categories.push(key);
+          newSeries.push({x:key,y:val});
+          }
+        }
+        
+      
+        const series = [{ data: newSeries }];
+        chart.series = series;
+ 
+
         setOptions(pre => ({
           ...pre,
           //@ts-ignore
           labels: categories
         }))
         //@ts-ignore
-        setSeries([ ...newSeries]) 
+        setSeries([ ...series]) 
       });
   };
   useEffect(() => {
-    Log('App usage chart...');
+    Log('treemap chart...');
     fetchData();
     //setBarState(dummyChartData);
   }, [startDateVal]);
@@ -95,7 +112,7 @@ function AppUsageChart(props: any) {
       <Chart
         options={options}
         series={series}
-        type='pie'
+        type='treemap'
         width='600'
         height='400'
       />
