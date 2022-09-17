@@ -63,9 +63,13 @@ def extract_twitter_hashtags(request):
     records = models.TwitterHashtag.objects\
         .filter(twitter_id_int=twitter_id[0]['twitter_id_int']).values_list('hashtag', 'occurrence')
 
+    unsorted_return_data = dict(list(records))
+
+    sorted_return_data = dict(sorted(unsorted_return_data.items(), key=lambda item: item[1], reverse=True))
+
     res = {
         'success': True,
-        'data': dict(list(records))
+        'data': sorted_return_data
     }
     return HttpResponse(json.dumps(res, cls=DjangoJSONEncoder), content_type='application/json')
 
