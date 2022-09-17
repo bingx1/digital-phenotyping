@@ -25,6 +25,7 @@ import KeywordCloud from '../../components/InfoDetailsChart/KeywordCloud';
 import LocationNumberBarChart from '../../components/InfoDetailsChart/LocationNumberBarChart';
 import LocationMap from '../../components/InfoDetailsChart/LocationMap';
 import ScreenUsageHeatMap from '../../components/InfoDetailsChart/ScreenUsageHeatMap';
+import TwitterHashtagChart from '../../components/InfoDetailsChart/TwitterHashtagChart';
 
 function InfoDetailsPage() {
   let navigate = useNavigate();
@@ -114,9 +115,14 @@ function InfoDetailsPage() {
   );
 
   const tagCloud = (
+    <ChartContainer>
     <CardContainer>
       <KeywordCloud uid={patientId} />
     </CardContainer>
+    <CardContainer>
+      <TwitterHashtagChart uid={patientId} />
+    </CardContainer>
+    </ChartContainer>
   );
 
   const defaultGreeting = (

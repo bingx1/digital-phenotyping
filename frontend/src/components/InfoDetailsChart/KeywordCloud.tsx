@@ -25,7 +25,7 @@ function KeywordCloud(props: any) {
         console.log("UID",props.uid)
         axios
           .post(
-            'https://digital-phenotyping.herokuapp.com/dataServer/twitterWordCloud',{
+            'https://digital-phenotyping.herokuapp.com/twitterDataServer/twitterWordCloud',{
                 uid: props.uid
             },
             {
@@ -35,7 +35,7 @@ function KeywordCloud(props: any) {
             }   
           )
           .then((response) => {
-            console.log('Fetched data..', response.data);
+            console.log('Fetched Keyword data..', response.data);
             let resData = response.data.data 
             let resArr = []
             for(const [key , val] of Object.entries<any>(resData)){
