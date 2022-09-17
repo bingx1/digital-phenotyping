@@ -41,6 +41,7 @@ interface iResData {
   twitter_id: string;
   uid: number;
 }
+import TwitterHashtagChart from '../../components/InfoDetailsChart/TwitterHashtagChart';
 
 function InfoDetailsPage() {
   let navigate = useNavigate();
@@ -132,9 +133,14 @@ function InfoDetailsPage() {
   );
 
   const tagCloud = (
+    <ChartContainer>
     <CardContainer>
       <KeywordCloud uid={patientId} />
     </CardContainer>
+    <CardContainer>
+      <TwitterHashtagChart uid={patientId} />
+    </CardContainer>
+    </ChartContainer>
   );
 
   const defaultGreeting = (
