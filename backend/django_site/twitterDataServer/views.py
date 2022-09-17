@@ -11,6 +11,8 @@ from django.http import HttpResponse, HttpResponseBadRequest
 
 from twitterDataServer import models
 
+from django.http import Http404
+
 import tweepy
 
 from django.http import Http404
@@ -19,6 +21,10 @@ import itertools
 import collections
 import os
 import re
+
+from apscheduler.schedulers.background import BackgroundScheduler 
+from django_apscheduler.jobstores import DjangoJobStore, register_events, register_job
+import time
 
 # Create your views here.
 def extract_twitter_keywords(request):
