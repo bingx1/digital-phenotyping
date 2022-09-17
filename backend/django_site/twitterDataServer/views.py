@@ -68,6 +68,7 @@ def extract_twitter_hashtag(request):
     uid = req.get('uid')
     print(uid)
 
+
     twitter_id_int_result = models.TbClient.objects.filter(uid=uid).values("twitter_id_int")
 
     if len(twitter_id_int_result) == 0:
