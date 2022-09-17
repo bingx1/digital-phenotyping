@@ -26,7 +26,7 @@ import LocationNumberBarChart from '../../components/InfoDetailsChart/LocationNu
 import LocationMap from '../../components/InfoDetailsChart/LocationMap';
 import ScreenUsageHeatMap from '../../components/InfoDetailsChart/ScreenUsageHeatMap';
 import TwitterHashtagChart from '../../components/InfoDetailsChart/TwitterHashtagChart';
-
+import TwitterHashtagBarchart from '../../components/InfoDetailsChart/TwitterHashtagBarchart';
 function InfoDetailsPage() {
   let navigate = useNavigate();
   let location = useLocation();
@@ -115,14 +115,21 @@ function InfoDetailsPage() {
   );
 
   const tagCloud = (
+    <>
     <ChartContainer>
-    <CardContainer>
-      <KeywordCloud uid={patientId} />
-    </CardContainer>
-    <CardContainer>
-      <TwitterHashtagChart uid={patientId} />
-    </CardContainer>
+      <CardContainer>
+        <KeywordCloud uid={patientId} />
+      </CardContainer>
+      <CardContainer>
+        <TwitterHashtagChart uid={patientId} />
+      </CardContainer>
     </ChartContainer>
+    <ChartContainer>
+      <CardContainer>
+        <TwitterHashtagBarchart uid={patientId} />
+      </CardContainer>
+    </ChartContainer>
+    </>
   );
 
   const defaultGreeting = (
