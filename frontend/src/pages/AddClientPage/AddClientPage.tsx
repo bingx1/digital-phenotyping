@@ -181,7 +181,7 @@ function InfoDetailsPage() {
             onChange={(newValue: Date | null) => {
               setDateOfBirth(newValue);
             }}
-            inputFormat='yyyy-mm-dd'
+            inputFormat='yyyy-MM-dd'
             renderInput={(params: any) => (
               <TextField required margin='dense' variant='standard' {...params} />
             )}

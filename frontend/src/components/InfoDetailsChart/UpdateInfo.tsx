@@ -135,7 +135,7 @@ function UpdateInfo(props: any) {
     console.log(clientTitle);
     console.log(firstName);
     console.log(lastName);
-    console.log(dateOfBirth.toISOString().substring(0, 10));
+    console.log(new Date(dateOfBirth).toISOString().substring(0, 10));
     console.log(textNotes);
     console.log(twitterId);
     console.log(initialTwitter === twitterId ? false : true);
@@ -150,7 +150,7 @@ function UpdateInfo(props: any) {
           clientTitle: clientTitle,
           firstName: firstName,
           lastName: lastName,
-          dateOfBirth: dateOfBirth.toISOString().substring(0, 10),
+          dateOfBirth: new Date(dateOfBirth).toISOString().substring(0, 10),
           textNotes: textNotes,
           twitterId: twitterId,
           facebookId: facebookId,
