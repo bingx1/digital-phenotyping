@@ -71,7 +71,7 @@ function TwitterHashtagBarchart(props: any) {
     console.log(endDateVal)
     axios
       .post(
-        'https://digital-phenotyping.herokuapp.com/twitterDataServer/twitterWordCloud',
+        'https://digital-phenotyping.herokuapp.com/twitterDataServer/twitterHashtag',
         {
           uid: props.uid,
           startDate: startDateVal,
@@ -84,7 +84,7 @@ function TwitterHashtagBarchart(props: any) {
         }
       )
       .then((response) => {
-        Log('Fetched hashtag data..', response.data);
+        Log('Fetched hashtag barchart data..', response.data);
         let chart = dummyHashtagChart
         let resData = response.data.data
 
@@ -92,10 +92,10 @@ function TwitterHashtagBarchart(props: any) {
         let categories = [] as any[];
         let newSeries = [];
         for(const [key , val] of Object.entries<any>(resData)){
-          if(val > 5){
+          
           categories.push(key);
           newSeries.push(val);
-          }
+          
         }
         chart.options.series = [{ data :newSeries}];
         chart.options.xaxis.categories = categories;
@@ -121,10 +121,6 @@ function TwitterHashtagBarchart(props: any) {
  
   return (
     <Container>
-      <DateWrapper>
-        <DateRangeSelector setStartDate={setStartDateVal} setEndDate={setEndDateVal} />
-      </DateWrapper>
-
       <Chart
         options={options}
         series={series}

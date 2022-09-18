@@ -55,12 +55,12 @@ function AppUsageChart(props: any) {
     console.log(endDateVal)
     axios
       .post(
-        'https://digital-phenotyping.herokuapp.com/twitterDataServer/twitterWordCloud',
+        'https://digital-phenotyping.herokuapp.com/twitterDataServer/twitterHashtag',
         {
           uid: props.uid,
           startDate: startDateVal,
           endDate: endDateVal,
-        },
+        }, 
         {
           headers: {
             Authorization: `Bearer ${userInfo!.access}`,
@@ -71,20 +71,20 @@ function AppUsageChart(props: any) {
         Log('Fetched hashtag data..', response.data);
         let chart = dummyChartData
         let resData = response.data.data
-
         
         let categories = [] as any[];
         let newSeries = [];
         for(const [key , val] of Object.entries<any>(resData)){
 
-          if(val > 3){
+          
           categories.push(key);
           newSeries.push({x:key,y:val});
-          }
+          
         }
-        
+  
       
         const series = [{ data: newSeries }];
+
         chart.series = series;
  
 
@@ -105,9 +105,6 @@ function AppUsageChart(props: any) {
  
   return (
     <Container>
-      <DateWrapper>
-        <DateRangeSelector setStartDate={setStartDateVal} setEndDate={setEndDateVal} />
-      </DateWrapper>
 
       <Chart
         options={options}

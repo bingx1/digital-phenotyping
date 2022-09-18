@@ -26,6 +26,8 @@ import LocationNumberBarChart from '../../components/InfoDetailsChart/LocationNu
 import LocationMap from '../../components/InfoDetailsChart/LocationMap';
 import ScreenUsageHeatMap from '../../components/InfoDetailsChart/ScreenUsageHeatMap';
 import UpdateInfo from '../../components/InfoDetailsChart/UpdateInfo';
+import TwitterHashtagChart from '../../components/InfoDetailsChart/TwitterHashtagChart';
+import TwitterHashtagBarchart from '../../components/InfoDetailsChart/TwitterHashtagBarchart';
 
 interface iResData {
   age: number;
@@ -41,8 +43,7 @@ interface iResData {
   twitter_id: string;
   uid: number;
 }
-import TwitterHashtagChart from '../../components/InfoDetailsChart/TwitterHashtagChart';
-import TwitterHashtagBarchart from '../../components/InfoDetailsChart/TwitterHashtagBarchart';
+
 function InfoDetailsPage() {
   let navigate = useNavigate();
   let location = useLocation();
