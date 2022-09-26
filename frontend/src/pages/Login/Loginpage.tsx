@@ -67,8 +67,10 @@ export default function Loginpage() {
       .then((response) => {
         Log('Login data..', response.data);
         if (response.data.access !== undefined) {
+          
           setShowLoginLoading(false);
           sessionStorage.setItem('userInfo', JSON.stringify(response.data));
+          setPassword('')
           navigate('/homepage');
         }
       })
@@ -88,7 +90,7 @@ export default function Loginpage() {
           <EmailIcon sx={{ fontSize: 33 }} />
           <Wrapper>
             <Title>Email</Title>
-            <TextInput onChange={changeAccount} value={account} />
+            <TextInput role='account' onChange={changeAccount} value={account} />
           </Wrapper>
         </TextInputContainer>
         <TextInputContainer>
@@ -96,6 +98,7 @@ export default function Loginpage() {
           <Wrapper>
             <Title>Password</Title>
             <TextInput
+              role='password'
               onKeyDown={handleSubmit}
               onChange={changePassword}
               value={password}
@@ -109,7 +112,7 @@ export default function Loginpage() {
           )}
         </TextInputContainer>
         <LoginButtonContainer>
-          <LoginBtn color='info' loading={showLoginLoading} variant='contained' onClick={login}>
+          <LoginBtn role='login' color='info' loading={showLoginLoading} variant='contained' onClick={login}>
             Login
           </LoginBtn>
         </LoginButtonContainer>
