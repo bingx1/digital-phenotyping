@@ -61,7 +61,7 @@ function CallsUsageChart(props: any) {
 
     axios
       .post(
-        URL.BASE_URL + '/dataServer/calls',
+        URL.BASE_URL + '/callServer/calls',
         {
           uid: props.uid,
           startDate: startDateVal,

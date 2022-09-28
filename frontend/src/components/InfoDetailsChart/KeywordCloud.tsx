@@ -52,7 +52,17 @@ function KeywordCloud(props: any) {
         setKeywords(resArr);
       });
   };
-  return <ReactWordcloud options={options} words={keywords} />;
+  return (
+    <>
+      {keywords.length === 0 ? (
+        <div>
+          Twitter keyword <br></br>No data available.
+        </div>
+      ) : (
+        <ReactWordcloud options={options} words={keywords} />
+      )}
+    </>
+  );
 }
 
 export default KeywordCloud;
