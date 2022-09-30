@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import COLORS from '../../constant/Colors';
 import { Log } from '../common/Logger';
 import axios from 'axios';
-import URL from '../../constant/Endpoint';
+import { BASE_URL } from '../../constant/Endpoint';
 
 const dummyHashtagChart = {
   options: {
@@ -60,7 +60,7 @@ function TwitterTopicChart(props: any) {
     let userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
     axios
       .post(
-        URL.BASE_URL + '/twitterDataServer/twitterTopics',
+        BASE_URL + '/twitterDataServer/twitterTopics',
         {
           uid: props.uid,
         },

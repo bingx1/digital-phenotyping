@@ -1,5 +1,5 @@
 import axios from 'axios';
-import URL from '../../constant/Endpoint';
+import { BASE_URL } from '../../constant/Endpoint';
 import { SetStateAction, useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import styled from 'styled-components';
@@ -24,7 +24,7 @@ function LocationMap(props: any) {
 
     axios
       .post(
-        URL.BASE_URL + '/locationServer/MapCoordinate',
+        BASE_URL + '/locationServer/MapCoordinate',
         {
           uid: props.uid,
           startDate: startDateVal,
@@ -46,6 +46,7 @@ function LocationMap(props: any) {
         }
 
         //setApiKey(response.data.key)
+        //TODO: replace key
         setApiKey('AIzaSyBX1z5nvjcjzyxSMT-QCVS3ERu6Y3iNSb0');
       });
   };

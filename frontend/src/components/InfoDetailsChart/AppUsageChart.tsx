@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import COLORS from '../../constant/Colors';
 import { Log } from '../common/Logger';
 import axios from 'axios';
-import URL from '../../constant/Endpoint';
+import { BASE_URL } from '../../constant/Endpoint';
 import DateRangeSelector from '../common/DateRangeSelector';
 // dummy data for app time usage
 const dummyChartData = {
@@ -44,7 +44,7 @@ function AppUsageChart(props: any) {
     console.log(endDateVal);
     axios
       .post(
-        URL.BASE_URL + '/appForeground/',
+        BASE_URL + '/appForeground/',
         {
           uid: props.uid,
           startDate: startDateVal,

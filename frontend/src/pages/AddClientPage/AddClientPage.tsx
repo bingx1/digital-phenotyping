@@ -11,7 +11,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import axios from 'axios';
-import URL from '../../constant/Endpoint';
+import { BASE_URL } from '../../constant/Endpoint';
 import { Log } from '../../components/common/Logger';
 import { Snackbar, Alert } from '@mui/material';
 
@@ -98,7 +98,7 @@ function InfoDetailsPage() {
     console.log(facebookId);
     axios
       .post(
-        URL.BASE_URL + '/userServer/AddClient',
+        BASE_URL + '/userServer/AddClient',
         {
           clinicianId: clinicianInfo.user_info.id,
           clientTitle: clientTitle,

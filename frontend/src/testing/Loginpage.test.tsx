@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import Loginpage from '../pages/Login/Loginpage';
 import { MemoryRouter } from 'react-router-dom';
-import URL from '../constant/Endpoint';
+import { BASE_URL } from '../constant/Endpoint';
 
 const fakeClinicianInfo = {
   refresh:
@@ -21,7 +21,7 @@ const fakeClinicianInfo = {
   },
 };
 const server = setupServer(
-  rest.post(URL.BASE_URL + '/login/', (req, res, ctx) => {
+  rest.post(BASE_URL + '/login/', (req, res, ctx) => {
     return res(ctx.json(fakeClinicianInfo));
   })
 );
