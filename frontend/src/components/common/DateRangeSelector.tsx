@@ -7,7 +7,6 @@ import addDays from 'date-fns/addDays';
 import startOfMonth from 'date-fns/startOfMonth';
 import endOfMonth from 'date-fns/endOfMonth';
 import addMonths from 'date-fns/addMonths';
-import COLORS from '../../constant/Colors';
 import 'rsuite/dist/rsuite.css';
 
 const predefinedRanges = [

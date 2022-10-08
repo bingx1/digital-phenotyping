@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import styled from 'styled-components';
+import axios from 'axios';
 import COLORS from '../../constant/Colors';
 import { Log } from '../common/Logger';
-import axios from 'axios';
 import { BASE_URL } from '../../constant/Endpoint';
 import DateRangeSelector from '../common/DateRangeSelector';
 // dummy data for app time usage

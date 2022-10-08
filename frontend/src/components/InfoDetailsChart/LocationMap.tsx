@@ -45,9 +45,10 @@ function LocationMap(props: any) {
           setMarkerList([...response.data.data]);
         }
 
-        //setApiKey(response.data.key)
+        setApiKey('AIzaSyAy_8c4pi_r2SIILx_XsG__YQPiNXA7THM')
         //TODO: replace key
-        setApiKey('AIzaSyBX1z5nvjcjzyxSMT-QCVS3ERu6Y3iNSb0');
+        
+        //setApiKey('AIzaSyBX1z5nvjcjzyxSMT-QCVS3ERu6Y3iNSb0');
       });
   };
   const [activeMarker, setActiveMarker] = useState(null);

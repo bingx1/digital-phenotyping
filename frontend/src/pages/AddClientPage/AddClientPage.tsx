@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import NavTitle from '../../components/common/NavTitle';
-import SearchBar from '../../components/common/SearchBar';
-import NameAvatar from '../../components/common/NameAvatar';
-import COLORS from '../../constant/Colors';
+import { Snackbar, Alert } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -13,8 +10,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import axios from 'axios';
 import { BASE_URL } from '../../constant/Endpoint';
 import { Log } from '../../components/common/Logger';
-import { Snackbar, Alert } from '@mui/material';
-
+import NavTitle from '../../components/common/NavTitle';
+import SearchBar from '../../components/common/SearchBar';
+import NameAvatar from '../../components/common/NameAvatar';
+import COLORS from '../../constant/Colors';
 function InfoDetailsPage() {
   let navigate = useNavigate();
   let location = useLocation();
