@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -11,7 +11,7 @@ import { BASE_URL } from '../../constant/Endpoint';
 import { Log } from '../../components/common/Logger';
 import ChartContainer from '../common/ChartContainer';
 
-function UpdateInfo(props: any) {
+function UpdateInfo(props: UpdateInfoProps) {
   let navigate = useNavigate();
   const [initialTwitter, setInitialTwitter] = useState(props.clientInfo.twitter_id);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -224,7 +224,7 @@ function UpdateInfo(props: any) {
             setDateOfBirth(newValue);
           }}
           inputFormat='yyyy-MM-dd'
-          renderInput={(params: any) => (
+          renderInput={(params: TextFieldProps) => (
             <TextField required margin='dense' variant='standard' {...params} />
           )}
         />

@@ -27,12 +27,12 @@ const dummyChartData = {
       width: 380,
       type: 'pie',
     },
-    labels: [] as any[],
+    labels: [] as string[],
   },
-  series: [] as any[],
+  series: [] as number[],
 };
 
-function AppUsageChart(props: any) {
+function AppUsageChart(props: ChartProps) {
   const [options, setOptions] = useState({});
   const [series, setSeries] = useState([]);
   const [startDateVal, setStartDateVal] = useState(1641634738549);
@@ -60,7 +60,7 @@ function AppUsageChart(props: any) {
       .then((response) => {
         Log('Fetched data..', response.data);
         let res = dummyChartData;
-        let categories = [] as any[];
+        let categories = [] as string[];
         let newSeries = [];
         for (let i = 0; i < response.data[0].length; i++) {
           if (response.data[1][i] >= 1) {

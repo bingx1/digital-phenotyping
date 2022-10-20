@@ -23,10 +23,10 @@ export default function Loginpage() {
   const toggleShowPwd = () => {
     setShowPwd(!showPwd);
   };
-  const changeAccount = (e: any) => {
+  const changeAccount = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccount(e.target.value);
   };
-  const changePassword = (e: any) => {
+  const changePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
@@ -41,7 +41,7 @@ export default function Loginpage() {
     return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
   });
 
-  const handleSubmit = (evt: any) => {
+  const handleSubmit = (evt: React.KeyboardEvent<HTMLInputElement>) => {
     if (evt.key === 'Enter') {
       login();
     }

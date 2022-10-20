@@ -11,7 +11,7 @@ const colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0', '#00D9E9'
 
 const dummyHashtagChart = {
   options: {
-    series: [{ data: [] as any[] }],
+    series: [{ data: [] as number[] }],
     chart: {
       type: 'bar',
       height: 350,
@@ -27,7 +27,7 @@ const dummyHashtagChart = {
       enabled: true,
     },
     xaxis: {
-      categories: [] as any[],
+      categories: [] as string[],
       title: {
         text: 'Hours of usage',
         style: {
@@ -56,9 +56,9 @@ const dummyHashtagChart = {
     },
   },
 };
-function TwitterHashtagBarchart(props: any) {
+function TwitterHashtagBarchart(props: ChartProps) {
   const [options, setOptions] = useState({});
-  const [series, setSeries] = useState([] as any[]);
+  const [series, setSeries] = useState([] as ApexAxisChartSeries);
   const [hasData, setHasData] = useState(false);
 
   const fetchData = () => {
@@ -83,9 +83,9 @@ function TwitterHashtagBarchart(props: any) {
         if (Object.keys(response.data.data).length === 0) {
           setHasData(false);
         } else {
-          let categories = [] as any[];
+          let categories = [] as string[];
           let newSeries = [];
-          for (const [key, val] of Object.entries<any>(resData)) {
+          for (const [key, val] of Object.entries<number>(resData)) {
             categories.push(key);
             newSeries.push(val);
           }

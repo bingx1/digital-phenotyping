@@ -11,7 +11,7 @@ import ChartDataWrapper from '../common/ChartDataWrapper';
 const screenUsageSeries = [];
 
 const screenUsageData = {
-  series: [] as any[],
+  series: [] as SeriesProps[],
   options: {
     chart: {
       height: 350,
@@ -36,7 +36,7 @@ const screenUsageData = {
     colors: ['#008FFB'],
     xaxis: {
       type: 'category',
-      categories: [] as any[],
+      categories: [] as string[],
     },
     title: {
       text: 'Screen Usage Frequency',
@@ -54,7 +54,7 @@ const screenUsageData = {
   },
 };
 
-function ScreenUsageHeatMap(props: any) {
+function ScreenUsageHeatMap(props: ChartProps) {
   const [options, setOptions] = useState({});
   const [series, setSeries] = useState([]);
 

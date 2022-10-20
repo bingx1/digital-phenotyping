@@ -11,7 +11,7 @@ import ChartDataWrapper from '../common/ChartDataWrapper';
 const loacationNumberSeries = [];
 
 const locationNumberData = {
-  series: [] as any[],
+  series: [] as object[],
   options: {
     chart: {
       height: 350,
@@ -36,7 +36,7 @@ const locationNumberData = {
     colors: ['#F3B415', '#F27036', '#008FFB', '#6A6E94'],
     xaxis: {
       type: 'category',
-      categories: [] as any[],
+      categories: [] as string[],
     },
     title: {
       text: 'locations visited & frequency',
@@ -54,7 +54,7 @@ const locationNumberData = {
   },
 };
 
-function LocationNumberHeatMapChart(props: any) {
+function LocationNumberHeatMapChart(props: ChartProps) {
   const [options, setOptions] = useState({});
   const [series, setSeries] = useState([]);
 

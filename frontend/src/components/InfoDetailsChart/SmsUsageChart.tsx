@@ -57,7 +57,7 @@ const dummySMSData = {
   },
 };
 
-function SmsUsageChart(props: any) {
+function SmsUsageChart(props: ChartProps) {
   const [options, setOptions] = useState(dummySMSData.options);
   const [series, setSeries] = useState(dummySMSData.series);
   const [hasData, setHasData] = useState(false);

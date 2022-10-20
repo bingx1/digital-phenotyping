@@ -87,7 +87,7 @@ const durationData = {
   },
 };
 
-function UnlockDurationChart(props: any) {
+function UnlockDurationChart(props: ChartProps) {
   const [options, setOptions] = useState({});
   const [series, setSeries] = useState([]);
 
@@ -117,11 +117,11 @@ function UnlockDurationChart(props: any) {
         Log('Fetched ScreenUnlocked data..', response.data);
         let res = durationData;
         let data = response.data;
-        let categories: any[] = [];
+        let categories: string[] = [];
         let newSeries = [
           {
             name: 'unlock screen time',
-            data: [] as any[],
+            data: [] as number[],
           },
         ];
         for (let i = 0; i < data[0].length; i++) {

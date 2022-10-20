@@ -8,7 +8,7 @@ import ChartContainer from '../common/ChartContainer';
 
 const dummyHashtagChart = {
   options: {
-    series: [{ data: [] as any[] }],
+    series: [{ data: [] as number[] }],
     chart: {
       type: 'bar',
       height: 350,
@@ -24,7 +24,7 @@ const dummyHashtagChart = {
       enabled: true,
     },
     xaxis: {
-      categories: [] as any[],
+      categories: [] as string[],
       title: {
         text: 'Hours of usage',
         style: {
@@ -50,7 +50,7 @@ const dummyHashtagChart = {
     },
   },
 };
-function TwitterTopicChart(props: any) {
+function TwitterTopicChart(props: ChartProps) {
   const [options, setOptions] = useState({});
   const [series, setSeries] = useState([]);
   const [hasData, setHasData] = useState(false);
@@ -78,9 +78,9 @@ function TwitterTopicChart(props: any) {
         if (Object.keys(response.data.data).length === 0) {
           setHasData(false);
         } else {
-          let categories = [] as any[];
+          let categories = [] as string[];
           let newSeries = [];
-          for (const [key, val] of Object.entries<any>(resData)) {
+          for (const [key, val] of Object.entries<number>(resData)) {
             categories.push(key);
             newSeries.push(val);
           }

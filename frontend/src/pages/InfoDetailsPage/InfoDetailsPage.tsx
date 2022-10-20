@@ -32,21 +32,6 @@ import CallsTraceChart from '../../components/InfoDetailsChart/CallsTraceChart';
 import SmsTraceChart from '../../components/InfoDetailsChart/SmsTraceChart';
 import RowFlexContainer from '../../components/common/RowFlexContainer';
 
-interface iResData {
-  age: number;
-  aware_device_id: string;
-  client_title: string;
-  date_of_birth: string;
-  facebook_id: string;
-  first_name: string;
-  last_name: string;
-  last_update: string;
-  status: string;
-  text_notes: string;
-  twitter_id: string;
-  uid: number;
-}
-
 function InfoDetailsPage() {
   let navigate = useNavigate();
   let location = useLocation();
@@ -56,7 +41,7 @@ function InfoDetailsPage() {
   const [loadingPage, setLoadingpage] = useState(true);
 
   let token = sessionStorage.getItem('userInfo');
-  let stateFromPrePage: { clientInfo: iResData } = location.state as { clientInfo: iResData };
+  let stateFromPrePage: { clientInfo: iUserInfo } = location.state as { clientInfo: iUserInfo };
   useEffect(() => {
     if (!token || stateFromPrePage.clientInfo === null) {
       navigate('/');

@@ -73,7 +73,7 @@ const screenDummayData = {
   },
 };
 
-function UnlockTimesChart(props: any) {
+function UnlockTimesChart(props: ChartProps) {
   const [options, setOptions] = useState({});
   const [series, setSeries] = useState([]);
 
@@ -108,7 +108,7 @@ function UnlockTimesChart(props: any) {
         let newSeries = [
           {
             name: 'times unlocked',
-            data: [] as any[],
+            data: [] as number[],
           },
         ];
         for (let i = 0; i < data[0].length; i++) {

@@ -9,7 +9,7 @@ import ChartContainer from '../common/ChartContainer';
 import ChartDataWrapper from '../common/ChartDataWrapper';
 
 const locationNumberData = {
-  series: [] as any[],
+  series: [] as object[],
   options: {
     chart: {
       height: 350,
@@ -42,7 +42,7 @@ const locationNumberData = {
       },
     },
     xaxis: {
-      categories: [] as any[],
+      categories: [] as string[],
     },
     plotOptions: {
       bar: {
@@ -55,7 +55,7 @@ const locationNumberData = {
   },
 };
 
-function LocationNumberBarChart(props: any) {
+function LocationNumberBarChart(props: ChartProps) {
   const [options, setOptions] = useState({});
   const [series, setSeries] = useState([]);
 
@@ -85,11 +85,11 @@ function LocationNumberBarChart(props: any) {
         Log('Fetched Location Number data..', response.data);
         let data = response.data;
         let res = locationNumberData;
-        let categories: any[] = [];
+        let categories: string[] = [];
         let newSeries = [
           {
             name: 'times visited',
-            data: [] as any[],
+            data: [] as number[],
           },
         ];
         for (let i = 0; i < data.length; i++) {

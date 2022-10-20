@@ -86,8 +86,8 @@ const predefinedRanges = [
   },
 ];
 
-export default function DateRangeSelector(props: any) {
-  const confirmDate = (val: any[]) => {
+export default function DateRangeSelector(props: DateRangeSelectorProps) {
+  const confirmDate = (val: Date[]) => {
     if (val === null) {
       props.setStartDate(1641634738549);
       props.setEndDate(1641901876549);

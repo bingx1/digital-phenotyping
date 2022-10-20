@@ -38,7 +38,7 @@ const dummyChartData = {
   },
 };
 
-function AppUsageChart(props: any) {
+function AppUsageChart(props: ChartProps) {
   const [options, setOptions] = useState({});
   const [series, setSeries] = useState([]);
 
@@ -69,9 +69,9 @@ function AppUsageChart(props: any) {
         let chart = dummyChartData;
         let resData = response.data.data;
 
-        let categories = [] as any[];
+        let categories = [] as string[];
         let newSeries = [];
-        for (const [key, val] of Object.entries<any>(resData)) {
+        for (const [key, val] of Object.entries<number>(resData)) {
           categories.push(key);
           newSeries.push({ x: key, y: val });
         }

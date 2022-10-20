@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Snackbar, Alert } from '@mui/material';
-import TextField from '@mui/material/TextField';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -180,7 +180,7 @@ function InfoDetailsPage() {
               setDateOfBirth(newValue);
             }}
             inputFormat='yyyy-MM-dd'
-            renderInput={(params: any) => (
+            renderInput={(params: TextFieldProps) => (
               <TextField required margin='dense' variant='standard' {...params} />
             )}
           />

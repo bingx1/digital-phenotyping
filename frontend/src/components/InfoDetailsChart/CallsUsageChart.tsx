@@ -6,10 +6,11 @@ import COLORS from '../../constant/Colors';
 import DateRangeSelector from '../common/DateRangeSelector';
 import ChartContainer from '../common/ChartContainer';
 import ChartDataWrapper from '../common/ChartDataWrapper';
+import { ApexOptions } from 'apexcharts';
 
 // dummy data for Calls usage
 const dummyCallsData = {
-  series: [] as any[],
+  series: [] as ApexOptions['series'],
   options: {
     chart: {
       type: 'bar',
@@ -44,12 +45,12 @@ const dummyCallsData = {
       },
     },
     xaxis: {
-      categories: [] as any[],
+      categories: [] as string[],
     },
   },
 };
 
-function CallsUsageChart(props: any) {
+function CallsUsageChart(props: ChartProps) {
   const [options, setOptions] = useState(dummyCallsData.options);
   const [series, setSeries] = useState(dummyCallsData.series);
 

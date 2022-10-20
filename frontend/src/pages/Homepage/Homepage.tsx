@@ -13,21 +13,6 @@ import InfoSumCard from '../../components/common/InfoSumCard';
 import { BASE_URL } from '../../constant/Endpoint';
 import { Log } from '../../components/common/Logger';
 
-interface iResData {
-  age: number;
-  aware_device_id: string;
-  client_title: string;
-  date_of_birth: string;
-  facebook_id: string;
-  first_name: string;
-  last_name: string;
-  last_update: string;
-  status: string;
-  text_notes: string;
-  twitter_id: string;
-  uid: number;
-}
-
 const muiCache = createCache({
   key: 'mui-datatables',
   prepend: true,
@@ -35,8 +20,8 @@ const muiCache = createCache({
 
 export default function Homepage() {
   let navigate = useNavigate();
-  const [clientData, setClientData] = useState<any[]>([]);
-  const [rawData, setRawData] = useState<any[]>([]);
+  const [clientData, setClientData] = useState<(string | number)[][]>([]);
+  const [rawData, setRawData] = useState<(string | number)[][]>([]);
 
   let userInfo = sessionStorage.getItem('userInfo');
 
@@ -51,7 +36,7 @@ export default function Homepage() {
   const fetchClientList = () => {
     let clinicianId = JSON.parse(userInfo!).user_info.id;
     let token = JSON.parse(userInfo!).access;
-    let clientsList: any[] = [];
+    let clientsList: (string | number)[][] = [];
     axios
       .post(
         BASE_URL + '/userServer/ClientInfoList',
@@ -68,8 +53,8 @@ export default function Homepage() {
         Log('Fetched Clients data..', response.data);
         let tempRawData = response.data;
         setRawData(tempRawData);
-        tempRawData.forEach((item: iResData) => {
-          let temp: any[] = [];
+        tempRawData.forEach((item: iUserInfo) => {
+          let temp: (string | number)[] = [];
           temp.push(item.first_name + ' ' + item.last_name);
           temp.push(item.client_title);
           temp.push(item.age);
@@ -123,7 +108,7 @@ export default function Homepage() {
         sort: false,
         empty: true,
         customHeadLabelRender: () => <div className='bolder-text'>Action</div>,
-        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+        customBodyRenderLite: (dataIndex: number, rowIndex: number) => {
           return (
             <Button
               className='view-button'

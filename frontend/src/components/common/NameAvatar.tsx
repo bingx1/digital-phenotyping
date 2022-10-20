@@ -9,7 +9,7 @@ function NameAvatar() {
   const [name, setName] = useState('');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: any) => {
+  const handleClick = (event: React.FormEvent<HTMLInputElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -33,7 +33,7 @@ function NameAvatar() {
   return (
     <div className='name-avatar-container'>
       <div className='name-avatar-text'>{name}</div>
-      <div className='name-avatar-img' onClick={handleClick}>
+      <div className='name-avatar-img' onClick={() => handleClick}>
         <SupportAgentIcon sx={{ fontSize: 50 }} />
       </div>
       <Menu

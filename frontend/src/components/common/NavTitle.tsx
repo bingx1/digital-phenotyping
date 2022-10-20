@@ -1,6 +1,6 @@
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 
-function NavTitle(props: any) {
+function NavTitle(props: NavTitleProps) {
   return (
     <div className='nav-title-container'>
       {props.showArrowBack && <ArrowBackRoundedIcon fontSize='large' />}

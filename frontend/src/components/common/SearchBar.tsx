@@ -5,7 +5,7 @@ import { Log } from './Logger';
 import IconButton from '@mui/material/IconButton';
 function SearchBar() {
   const [searchText, setSearchText] = useState('');
-  const onEnter = (e: any) => {
+  const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       Log('enter pressed');
       submitSearch();
@@ -14,7 +14,7 @@ function SearchBar() {
   const submitSearch = () => {
     Log(searchText);
   };
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
   return (

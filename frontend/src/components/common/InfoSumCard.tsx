@@ -1,6 +1,6 @@
 import Chip from '@mui/material/Chip';
 import TwitterIcon from '@mui/icons-material/Twitter';
-export default function InfoSumCard(props: any) {
+export default function InfoSumCard(props: InfoSumCardProps) {
   const RenderContent = () => {
     switch (props.type) {
       case 'totalClients':

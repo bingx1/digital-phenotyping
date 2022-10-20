@@ -8,7 +8,7 @@ import { Log } from '../common/Logger';
 import ChartContainer from '../common/ChartContainer';
 import ChartDataWrapper from '../common/ChartDataWrapper';
 
-function LocationMap(props: any) {
+function LocationMap(props: ChartProps) {
   const [markerList, setMarkerList] = useState([]);
   const [apiKey, setApiKey] = useState('');
 
@@ -43,10 +43,7 @@ function LocationMap(props: any) {
           setMarkerList([...response.data.data]);
         }
 
-        setApiKey('AIzaSyAy_8c4pi_r2SIILx_XsG__YQPiNXA7THM');
-        //TODO: replace key
-
-        //setApiKey('AIzaSyBX1z5nvjcjzyxSMT-QCVS3ERu6Y3iNSb0');
+        setApiKey(response.data.key);
       });
   };
   const [activeMarker, setActiveMarker] = useState(null);
