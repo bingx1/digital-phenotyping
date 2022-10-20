@@ -1,9 +1,11 @@
 import axios from 'axios';
-import { BASE_URL } from '../../constant/Endpoint';
 import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
+import { BASE_URL } from '../../constant/Endpoint';
 import COLORS from '../../constant/Colors';
 import DateRangeSelector from '../common/DateRangeSelector';
+import ChartContainer from '../common/ChartContainer';
+import ChartDataWrapper from '../common/ChartDataWrapper';
 
 // dummy data for Calls trace
 const dummyCallsTrace = {
@@ -104,10 +106,10 @@ function CallsTraceChart(props: any) {
   }, [startDateVal]);
 
   return (
-    <div className='container'>
-      <div className='data-wrapper'>
+    <ChartContainer>
+      <ChartDataWrapper>
         <DateRangeSelector setStartDate={setStartDateVal} setEndDate={setEndDateVal} />
-      </div>
+      </ChartDataWrapper>
       {hasData ? (
         <Chart
           //@ts-ignore
@@ -122,7 +124,7 @@ function CallsTraceChart(props: any) {
           Calls Trace <br></br>No data available.
         </div>
       )}
-    </div>
+    </ChartContainer>
   );
 }
 

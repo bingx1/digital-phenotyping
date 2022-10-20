@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { BASE_URL } from '../../constant/Endpoint';
 import { useEffect, useState } from 'react';
 import ReactWordcloud from 'react-wordcloud';
+import { BASE_URL } from '../../constant/Endpoint';
 
 const angles: [number, number] = [-10, 10];
 const fontSizes: [number, number] = [20, 80];

@@ -1,11 +1,12 @@
 import axios from 'axios';
-import { BASE_URL } from '../../constant/Endpoint';
 import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
-import styled from 'styled-components';
+import { BASE_URL } from '../../constant/Endpoint';
 import COLORS from '../../constant/Colors';
 import DateRangeSelector from '../common/DateRangeSelector';
 import { Log } from '../common/Logger';
+import ChartContainer from '../common/ChartContainer';
+import ChartDataWrapper from '../common/ChartDataWrapper';
 
 const locationNumberData = {
   series: [] as any[],
@@ -118,26 +119,17 @@ function LocationNumberBarChart(props: any) {
   }, [startDateVal]);
 
   return (
-    <Container>
-      <DateWrapper>
+    <ChartContainer>
+      <ChartDataWrapper>
         <DateRangeSelector setStartDate={setStartDateVal} setEndDate={setEndDateVal} />
-      </DateWrapper>
+      </ChartDataWrapper>
       {series.length === 0 ? (
         <div>No data available.</div>
       ) : (
         <Chart options={options} series={series} type='heatmap' width='650' height='400' />
       )}
-    </Container>
+    </ChartContainer>
   );
 }
 
 export default LocationNumberBarChart;
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const DateWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;

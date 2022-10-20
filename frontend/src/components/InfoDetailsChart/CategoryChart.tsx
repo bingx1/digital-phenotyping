@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
-import styled from 'styled-components';
 import COLORS from '../../constant/Colors';
 import { BASE_URL } from '../../constant/Endpoint';
+import ChartContainer from '../common/ChartContainer';
+import ChartDataWrapper from '../common/ChartDataWrapper';
 import DateRangeSelector from '../common/DateRangeSelector';
 import { Log } from '../common/Logger';
 
@@ -118,10 +119,10 @@ function CategoryChart(props: any) {
     fetchData();
   }, [startDateVal]);
   return (
-    <Container>
-      <DateWrapper>
+    <ChartContainer>
+      <ChartDataWrapper>
         <DateRangeSelector setStartDate={setStartDateVal} setEndDate={setEndDateVal} />
-      </DateWrapper>
+      </ChartDataWrapper>
       {hasData ? (
         <Chart options={options} series={series} type='bar' width='650' height='400' />
       ) : (
@@ -129,18 +130,8 @@ function CategoryChart(props: any) {
           App Categories <br></br>No data available.
         </div>
       )}
-    </Container>
+    </ChartContainer>
   );
 }
 
 export default CategoryChart;
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const DateWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;

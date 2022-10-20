@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import logo from '../../../src/assets/senpsi_logo.png';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Button, { ButtonProps } from '@mui/material/Button';
+import Button from '@mui/material/Button';
+import MUIDataTable from 'mui-datatables';
+import logo from '../../../src/assets/senpsi_logo.png';
 import NavTitle from '../../components/common/NavTitle';
 import NameAvatar from '../../components/common/NameAvatar';
 import SearchBar from '../../components/common/SearchBar';
-import MUIDataTable from 'mui-datatables';
 import InfoSumCard from '../../components/common/InfoSumCard';
-import { CacheProvider } from '@emotion/react';
-import createCache from '@emotion/cache';
-import COLORS from '../../constant/Colors';
-import axios from 'axios';
 import { BASE_URL } from '../../constant/Endpoint';
 import { Log } from '../../components/common/Logger';
 
@@ -92,31 +89,31 @@ export default function Homepage() {
     {
       name: 'Name',
       options: {
-        customHeadLabelRender: () => <TableHeader>Name</TableHeader>,
+        customHeadLabelRender: () => <div className='bolder-text'>Name</div>,
       },
     },
     {
       name: 'Title',
       options: {
-        customHeadLabelRender: () => <TableHeader>Title</TableHeader>,
+        customHeadLabelRender: () => <div className='bolder-text'>Title</div>,
       },
     },
     {
       name: 'Age',
       options: {
-        customHeadLabelRender: () => <TableHeader>Age</TableHeader>,
+        customHeadLabelRender: () => <div className='bolder-text'>Age</div>,
       },
     },
     {
       name: 'Status',
       options: {
-        customHeadLabelRender: () => <TableHeader>Status</TableHeader>,
+        customHeadLabelRender: () => <div className='bolder-text'>Status</div>,
       },
     },
     {
       name: 'Last update',
       options: {
-        customHeadLabelRender: () => <TableHeader>Last update</TableHeader>,
+        customHeadLabelRender: () => <div className='bolder-text'>Last update</div>,
       },
     },
     {
@@ -125,17 +122,18 @@ export default function Homepage() {
         filter: false,
         sort: false,
         empty: true,
-        customHeadLabelRender: () => <TableHeader>Action</TableHeader>,
+        customHeadLabelRender: () => <div className='bolder-text'>Action</div>,
         customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
           return (
-            <ViewBtn
+            <Button
+              className='view-button'
               variant='contained'
               onClick={() =>
                 navigate('/infodetailspage', { state: { clientInfo: rawData[dataIndex] } })
               }
             >
               View
-            </ViewBtn>
+            </Button>
           );
         },
       },
@@ -152,16 +150,16 @@ export default function Homepage() {
     );
   };
   return (
-    <MainContainer>
-      <Header>
-        <Logo src={logo} alt='logo' />
-        <Spacer />
+    <div className='homepage-main-container'>
+      <div className='page-header space-between-header'>
+        <img className='logo-img' src={logo} alt='logo' />
+        <div className='homepage-spacer' />
         <NavTitle title='Client Management' showArrowBack={false} />
         <SearchBar />
-        <Spacer />
+        <div className='homepage-spacer' />
         <NameAvatar />
-      </Header>
-      <SubInfoContainer>
+      </div>
+      <div className='homepage-sub-container'>
         <InfoSumCard
           title={'Total Clients'}
           type='totalClients'
@@ -169,9 +167,9 @@ export default function Homepage() {
         />
         <InfoSumCard title={'AWARE Sensors'} type='AWARESensors' />
         <InfoSumCard title={'Social Media Apps'} type='socialApps' />
-      </SubInfoContainer>
+      </div>
       <CacheProvider value={muiCache}>
-        <TableContainer>
+        <div className='table-container'>
           <MUIDataTable
             title={'Clients'}
             data={clientData}
@@ -181,53 +179,8 @@ export default function Homepage() {
               customToolbar: () => <HeaderElements />,
             }}
           />
-        </TableContainer>
+        </div>
       </CacheProvider>
-    </MainContainer>
+    </div>
   );
 }
-
-const MainContainer = styled.div`
-  color: black;
-  font-size: 32px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-bottom: 50px;
-`;
-const TableHeader = styled.div`
-  font-weight: bolder;
-`;
-const Header = styled.div`
-  width: 80vw;
-
-  height: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-const Logo = styled.img`
-  height: 60px;
-`;
-const Spacer = styled.div`
-  height: 20px;
-  width: 18px;
-`;
-const SubInfoContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 1000px;
-  margin-bottom: 40px;
-`;
-const TableContainer = styled.div`
-  width: 1000px;
-`;
-const ViewBtn = styled(Button)`
-  color: ${COLORS.white};
-  background-color: ${COLORS.light_purple};
-  &:hover {
-    background-color: ${COLORS.primary};
-  }
-`;

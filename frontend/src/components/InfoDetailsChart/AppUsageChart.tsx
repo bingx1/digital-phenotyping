@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
-import styled from 'styled-components';
 import axios from 'axios';
 import COLORS from '../../constant/Colors';
 import { Log } from '../common/Logger';
 import { BASE_URL } from '../../constant/Endpoint';
 import DateRangeSelector from '../common/DateRangeSelector';
+import ChartContainer from '../common/ChartContainer';
+import ChartDataWrapper from '../common/ChartDataWrapper';
 // dummy data for app time usage
 const dummyChartData = {
   options: {
@@ -86,26 +87,17 @@ function AppUsageChart(props: any) {
   }, [startDateVal]);
 
   return (
-    <Container>
-      <DateWrapper>
+    <ChartContainer>
+      <ChartDataWrapper>
         <DateRangeSelector setStartDate={setStartDateVal} setEndDate={setEndDateVal} />
-      </DateWrapper>
+      </ChartDataWrapper>
       {series.length === 0 ? (
         <div>No data available.</div>
       ) : (
         <Chart options={options} series={series} type='pie' width='600' height='400' />
       )}
-    </Container>
+    </ChartContainer>
   );
 }
 
 export default AppUsageChart;
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const DateWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
