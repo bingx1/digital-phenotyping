@@ -33,6 +33,7 @@ python manage.py startapp [Application Name]
 | sms               | Serving for phone sms related data                  | US002             |
 | twitterDataServer | Serving for client twitter related data             | US005             |
 | userServer        | Serving for user management                         | US008/US010/US011 |
+
 Each django application serve for one type of business scenario.<br>
 The full user story table shows in the [User Story Page](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132022PZ/User+Stories) of our confluence space.
 
