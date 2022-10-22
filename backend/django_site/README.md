@@ -15,7 +15,7 @@ All the envrionment configuration virables could be registered in `.env` file. A
 os.environ.get('KEY','ELSE')
 ```
 THe 'KEY' is what defined in `.env` file. IF no 'KEY' found, it will return 'ELSE' you defined.
-The real `.env` file will be depolyed on server and not show in the code.
+The real `.env` file will be depolyed on server and not show in the code. But you still need to upload a `.env` file under `/django-site` directory when developing.
 
 ### 2. utils folder
 The utils folder invovled some common function.<br>
