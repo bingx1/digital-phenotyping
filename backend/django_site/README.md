@@ -5,14 +5,14 @@ This directory contains the Django project. It's been generated using `django-ad
 The Django documentation and the steps used to generate the project can be found [here](https://docs.djangoproject.com/en/4.0/intro/tutorial01/).
 
 ## System Structure
-### src
+### src folder
 The src folder contains all the settings file and application routing urls.<br>
 Every application need to be registered in 'urls.py' in this folder.<br>
 All the envrionment configuration virables could be registered in '.env' file. And using the code below to get env virables:
 ```
 os.environ.get('KEY')
 ```
-### utils
+### utils folder
 
 | Folder            | Application                                         | User Story        |
 |-------------------|-----------------------------------------------------|-------------------|
