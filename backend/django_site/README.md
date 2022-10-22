@@ -40,10 +40,11 @@ Each django application serve for one type of business scenario.<br>
 The full user story table shows in the [User Story Page](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132022PZ/User+Stories) of our confluence space.
 
 ### 4. To Extent
-1. Start a new django application.
-2. Register the application in `urls.py` in src folder.
-3. Register the sub-route url in `urls.py` in your new application folder.
-4. Coding whatever you want in the new application folder.
+1. Learning django ORM and restframework.
+2. Start a new django application.
+3. Register the application in `urls.py` in src folder.
+4. Register the sub-route url in `urls.py` in your new application folder.
+5. Coding whatever you want in the new application folder.
 
 ## Testing
 The Django test case [test](https://docs.djangoproject.com/en/4.0/topics/testing/) is used for this project.
