@@ -6,6 +6,12 @@ The Django documentation and the steps used to generate the project can be found
 
 ## System Structure
 ### src
+The src folder contains all the settings file and application routing urls.<br>
+Every application need to be registered in 'urls.py' in this folder.<br>
+All the envrionment configuration virables could be registered in '.env' file. And using the code below to get env virables:
+```
+os.environ.get('KEY')
+```
 ### utils
 
 | Folder            | Application                                         | User Story        |
