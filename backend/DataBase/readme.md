@@ -1,4 +1,5 @@
 # SQL File Description
+The detail of [table structure diagram](https://confluence.cis.unimelb.edu.au:8443/display/SWEN900132022PZ/Database+structure) is in our confluence space.
 
 ## There are two files in this fold:
 
