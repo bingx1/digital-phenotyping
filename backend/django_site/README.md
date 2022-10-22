@@ -12,8 +12,9 @@ Every django application need to be registered in 'urls.py' in this folder.<br>
 All the envrionment configuration virables could be registered in '.env' file. And using the code below to get env virables:
 ```
 os.environ.get('KEY','ELSE')
-THe 'KEY' is what defined in '.env' file. IF no 'KEY' found, it will return 'ELSE' you defined.
 ```
+THe 'KEY' is what defined in '.env' file. IF no 'KEY' found, it will return 'ELSE' you defined.
+
 ### utils folder
 The utils folder invovled some common function.<br>
 Every common function could be put in here.
