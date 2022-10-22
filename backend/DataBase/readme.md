@@ -8,5 +8,5 @@
   
 ### 2. swen90013_db_init_data.sql
         This is the data dump file, only contains data.
-        If want to replay the development data, `first` to import 'swen90013_db_init.sql' and then import this SQL file.
+        If want to replay the development data, first to import 'swen90013_db_init.sql' and then import this SQL file.
 
