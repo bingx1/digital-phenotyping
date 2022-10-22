@@ -8,12 +8,12 @@ The Django documentation and the steps used to generate the project can be found
 
 ### src folder
 The src folder contains all the settings file and application routing urls.<br>
-Every django application need to be registered in 'urls.py' in this folder.<br>
+Every django application need to be registered in `urls.py` in this folder.<br>
 All the envrionment configuration virables could be registered in `.env` file. And using the code below to get env virables:
 ```
 os.environ.get('KEY','ELSE')
 ```
-THe 'KEY' is what defined in '.env' file. IF no 'KEY' found, it will return 'ELSE' you defined.
+THe 'KEY' is what defined in `.env` file. IF no 'KEY' found, it will return 'ELSE' you defined.
 
 ### utils folder
 The utils folder invovled some common function.<br>
@@ -39,8 +39,8 @@ The full user story table shows in the [User Story Page](https://confluence.cis.
 
 ### To Extent
 1. Start a new django application.
-2. Register the application in 'urls.py' in src folder.
-3. Register the sub-route url in 'urls.py' in your new application folder.
+2. Register the application in `urls.py` in src folder.
+3. Register the sub-route url in `urls.py` in your new application folder.
 4. Coding whatever you want in the new application folder.
 
 ## Testing
