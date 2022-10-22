@@ -1,6 +1,6 @@
-#SQL File Description
+# SQL File Description
 
-##There are two files in this fold:
+## There are two files in this fold:
 
     1. swen90013_db_init.sql
         This is the database structure dump file, no data only structure of database and table.
