@@ -1,5 +1,7 @@
+SQL File Description
+====================
 There are two files in this fold:
-
+---------------------------------
 1. swen90013_db_init.sql
   This is the database structure dump file, no data only structure of database and table.
   If only want to init the empty database, import 'swen90013_db_init.sql' only.
