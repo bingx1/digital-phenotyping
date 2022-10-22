@@ -4,6 +4,10 @@ This directory contains the Django project. It's been generated using `django-ad
 ## Documentation
 The Django documentation and the steps used to generate the project can be found [here](https://docs.djangoproject.com/en/4.0/intro/tutorial01/).
 
+## System Structure
+### appForeground
+This appliction serve for appforeground related data. Corresponding to US001.
+
 ## Testing
 The Django test case [test](https://docs.djangoproject.com/en/4.0/topics/testing/) is used for this project.
 Run the following command to view the coverage result of the backend tests
